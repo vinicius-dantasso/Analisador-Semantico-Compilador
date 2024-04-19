@@ -104,7 +104,7 @@ void Semantic::SubclassSemantic()
 
 void Semantic::DisjointSemantic()
 {
-    bool bound = tokens.size() >= 3;
+    bool bound = tokens.size() > 3;
     length++;
 
     if(bound)
@@ -120,6 +120,11 @@ void Semantic::DisjointSemantic()
                 Error(404); // Caso encontro qualquer outra coisa
             break;
         }
+    }
+    else 
+    {
+        cout << "Tudo nos conformes!\n";
+        DeleteSelf();
     }
 }
 
