@@ -1,26 +1,7 @@
-Class: Counterpart
-
-    SubClassOf: 
-        Resource,
-        historicallyDependsOn some OffereeUnconditionalAgreement
-
-    DisjointClasses:
-        Pizza, PizzaBase, PizzaTopping
-
-    Individuals:
-        CustomPizza1,
-        CustomPizza2
-
-Class: Pizza
+Class: MargheritaPizza
 
     SubClassOf:
-        hasBase some PizzaBase,
-        hasCaloricContent some xsd:integer
-
-    DisjointClasses:
-        Pizza, PizzaBase, PizzaTopping
-
-    Individuals:
-        CustomPizza1,
-        CustomPizza2
-
+        NamedPizza,
+        hasTopping some MozzarellaTopping,
+        hasTopping some TomatoTopping,
+        hasTopping only (MozzarellaTopping or TomatoTopping)

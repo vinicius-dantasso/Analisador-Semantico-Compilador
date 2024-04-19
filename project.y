@@ -10,10 +10,11 @@ using namespace std;
 
 char vet[200];
 int isClass = 0;
+string key = "";
 extern char * yytext;
 
 vector<int> token;
-unordered_map< int, vector<string> > image;
+unordered_map< string, vector<string> > image;
 
 Semantic * semantic;
 
@@ -37,28 +38,28 @@ classes: classPri classes
 
 
 // Classe Primitiva
-classPri: class subClassOf { semantic = new Semantic(token, image); token.clear(); }
-		| class subClassOf disjointClasses { semantic = new Semantic(token, image); token.clear(); cout << "Classe primitiva válida\n"; }
-		| class subClassOf individuals { semantic = new Semantic(token, image); token.clear(); cout << "Classe primitiva válida\n"; }
-		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image); token.clear(); /* Forçando erro */ }
-		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image); token.clear(); cout << "Classe primitiva válida\n"; }
+classPri: class subClassOf { semantic = new Semantic(token, image, 0); token.clear(); }
+		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe primitiva válida\n"; }
+		| class subClassOf individuals { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe primitiva válida\n"; }
+		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0); token.clear(); /* Forçando erro */ }
+		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe primitiva válida\n"; }
 	 	;
 
 // Classe Definida/Aninhada
-classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image); token.clear(); cout << "Classe Definida válida\n"; }
-			| class equivalentTo { semantic = new Semantic(token, image); token.clear(); }
+classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe Definida válida\n"; }
+			| class equivalentTo { semantic = new Semantic(token, image, 0); token.clear(); }
 			;
 
 // Classe com Axioma Fechado
-classAxi: class subClassOf_Axi { semantic = new Semantic(token, image); token.clear(); cout << "Classe com axioma de fechamento válida\n"; }
+classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1); token.clear(); cout << "Classe com axioma de fechamento válida\n"; }
 		;
 	
 // Classe Enumerada
-classEnum: class equivalentToEnum { semantic = new Semantic(token, image); token.clear(); cout << "Classe enumerada válida\n"; }
+classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe enumerada válida\n"; }
 		 ;
 
 // Classe Coberta
-classCober: class equivalentToCober { semantic = new Semantic(token, image); token.clear(); cout << "Classe coberta válida\n"; }
+classCober: class equivalentToCober { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe coberta válida\n"; }
 		  ;
 
 // Define uma Class: Pizza
@@ -71,42 +72,43 @@ class: CLASS IDCLASS {
 
 // SubClassOf para requisitos gerais
 subClassOf: SUBCLASSOF subClass_list { token.push_back(SUBCLASSTOKEN); }
-		  | SUBCLASSOF IDCLASS { token.push_back(SUBCLASSTOKEN); }
+		  | SUBCLASSOF id_class { token.push_back(SUBCLASSTOKEN); }
           ;
 
 // Diferentes formas que uma subClassOf geral pode se organizar
-subClass_list: propertie RESERVED_WORD IDCLASS RELOP subClass_list
-             | propertie RESERVED_WORD DATA_TYPE RELOP subClass_list
-			 | propertie RESERVED_WORD NUM RELOP IDCLASS subClass_list
-			 | propertie RESERVED_WORD NUM IDCLASS
-			 | propertie RESERVED_WORD NUM IDCLASS RELOP subClass_list
-			 | propertie propertie RESERVED_WORD NUM IDCLASS
-			 | propertie propertie RESERVED_WORD NUM IDCLASS RELOP subClass_list
-             | propertie RESERVED_WORD IDCLASS
-			 | propertie RESERVED_WORD IDCLASS RELOP subClass_list
-			 | propertie propertie RESERVED_WORD IDCLASS
-			 | propertie propertie RESERVED_WORD IDCLASS RELOP subClass_list
-             | propertie RESERVED_WORD DATA_TYPE
-			 | IDCLASS RELOP subClass_list
-			 | IDCLASS RELOP subClass_list2 subClass_list
-			 | IDCLASS RELOP composedBySubClass subClass_list
+subClass_list: propertie reserverd_words id_class RELOP subClass_list
+             | propertie reserverd_words DATA_TYPE RELOP subClass_list
+			 | propertie reserverd_words NUM RELOP id_class subClass_list
+			 | propertie reserverd_words NUM id_class
+			 | propertie reserverd_words NUM id_class RELOP subClass_list
+			 | propertie propertie reserverd_words NUM id_class
+			 | propertie propertie reserverd_words NUM id_class RELOP subClass_list
+             | propertie reserverd_words id_class
+			 | propertie reserverd_words id_class RELOP subClass_list
+			 | propertie propertie reserverd_words id_class
+			 | propertie propertie reserverd_words id_class RELOP subClass_list
+             | propertie reserverd_words DATA_TYPE
+			 | id_class RELOP subClass_list
+			 | id_class RELOP subClass_list2 subClass_list
+			 | id_class RELOP composedBySubClass subClass_list
              ;
-composedBySubClass: RELOP propertie RESERVED_WORD NUM IDCLASS RELOP RELOP
-				  |	RELOP propertie RESERVED_WORD NUM IDCLASS RELOP RESERVED_WORD composedBySubClass
+composedBySubClass: RELOP propertie reserverd_words NUM id_class RELOP RELOP
+				  |	RELOP propertie reserverd_words NUM id_class RELOP reserverd_words composedBySubClass
 				  ;
 
-subClass_list2: RELOP propertie RESERVED_WORD IDCLASS RELOP
-			  | RELOP propertie RESERVED_WORD IDCLASS RELOP RELOP
-			  | RELOP propertie RESERVED_WORD IDCLASS RELOP RESERVED_WORD subClass_list2
+subClass_list2: RELOP propertie reserverd_words id_class RELOP
+			  | RELOP propertie reserverd_words id_class RELOP RELOP
+			  | RELOP propertie reserverd_words id_class RELOP reserverd_words subClass_list2
 			  ;
 
 // SubClassOf especifica para determinar uma classe com axioma fechado
-subClassOf_Axi: SUBCLASSOF subClass_AxiList
+subClassOf_Axi: SUBCLASSOF subClass_AxiList { token.push_back(SUBCLASSTOKEN); }
 			  ;
 
 // Diferentes formas que uma subClassOf para o Axioma Fechado pode se organizar
-subClass_AxiList: IDCLASS RELOP propertie RESERVED_WORD IDCLASS RELOP propertie RESERVED_WORD IDCLASS RELOP propertie RESERVED_WORD RELOP IDCLASS RESERVED_WORD IDCLASS RELOP
-				| IDCLASS RELOP propertie RESERVED_WORD IDCLASS RELOP propertie RESERVED_WORD RELOP IDCLASS RELOP
+subClass_AxiList: id_class RELOP propertie reserverd_words id_class RELOP subClass_AxiList
+				| propertie reserverd_words id_class RELOP subClass_AxiList
+				| propertie reserverd_words RELOP cober_list RELOP
 				;
 
 // EquivalentTo para requisitos gerais
@@ -114,25 +116,25 @@ equivalentTo: equivalent DATA_TYPE RELOP RELOP NUM RELOP RELOP
 			| equivalent descAnin { cout << "Classe Definida/Aninhada válida\n"; }
 			;
 
-equivalent: EQUIVALENTTO IDCLASS RESERVED_WORD RELOP propertie RESERVED_WORD
-		  | EQUIVALENTTO IDCLASS RESERVED_WORD RELOP RELOP propertie RESERVED_WORD
-		  | EQUIVALENTTO IDCLASS RESERVED_WORD propertie RESERVED_WORD
+equivalent: EQUIVALENTTO id_class reserverd_words RELOP propertie reserverd_words
+		  | EQUIVALENTTO id_class reserverd_words RELOP RELOP propertie reserverd_words
+		  | EQUIVALENTTO id_class reserverd_words propertie reserverd_words
 		  ;
 
-descAnin: RELOP propertie RESERVED_WORD IDCLASS RELOP RELOP descAnin2
+descAnin: RELOP propertie reserverd_words id_class RELOP RELOP descAnin2
 		| RELOP cober_list RELOP RELOP descAnin2
 		| RELOP cober_list RELOP descAnin2
-		| IDCLASS descAnin2
-		| IDCLASS RELOP descAnin2
+		| id_class descAnin2
+		| id_class RELOP descAnin2
 		;
 
-descAnin2: RESERVED_WORD RELOP propertie RESERVED_WORD RELOP propertie RESERVED_WORD IDCLASS RELOP RELOP descAnin2
-		 | RESERVED_WORD RELOP propertie RESERVED_WORD RELOP cober_list RELOP RELOP descAnin2
-		 | RESERVED_WORD RELOP propertie RESERVED_WORD NUM IDCLASS RELOP descAnin2
-		 | RESERVED_WORD RELOP propertie RESERVED_WORD IDCLASS RELOP descAnin2
-		 | RESERVED_WORD RELOP propertie RESERVED_WORD IDCLASS RELOP RELOP descAnin2
-		 | RESERVED_WORD propertie RESERVED_WORD IDCLASS descAnin2
-		 | RESERVED_WORD propertie RESERVED_WORD NUM IDCLASS descAnin2
+descAnin2: reserverd_words RELOP propertie reserverd_words RELOP propertie reserverd_words id_class RELOP RELOP descAnin2
+		 | reserverd_words RELOP propertie reserverd_words RELOP cober_list RELOP RELOP descAnin2
+		 | reserverd_words RELOP propertie reserverd_words NUM id_class RELOP descAnin2
+		 | reserverd_words RELOP propertie reserverd_words id_class RELOP descAnin2
+		 | reserverd_words RELOP propertie reserverd_words id_class RELOP RELOP descAnin2
+		 | reserverd_words propertie reserverd_words id_class descAnin2
+		 | reserverd_words propertie reserverd_words NUM id_class descAnin2
 		 |
 		 ;
 
@@ -141,8 +143,8 @@ equivalentToCober: EQUIVALENTTO cober_list
 				 ;
 
 // Diferentes formas que um equivalentTo para a Classe Coberta pode se organizar
-cober_list: IDCLASS RESERVED_WORD cober_list
-		  | IDCLASS
+cober_list: id_class reserverd_words cober_list
+		  | id_class
 		  ;
 
 // EquivalentTo especifico para determinar uma classe enumerada
@@ -159,8 +161,8 @@ disjointClasses: DISJOINTCLASSES disjointClasses_list { token.push_back(DISJOINT
 			   ;
 
 // Diferentes formas que um DisjointClass pode se organizar
-disjointClasses_list: disjointClasses_list RELOP IDCLASS
-					| IDCLASS
+disjointClasses_list: disjointClasses_list RELOP id_class
+					| id_class
 					;
 
 // Define um Individuals
@@ -173,10 +175,16 @@ individuals_list: individuals_list RELOP IDINDIVIDUALS
 				;
 
 // Define as properties em um geral
-propertie: PROPERTIE_HAS
-         | PROPERTIE_IS
-         | PROPERTIE
+propertie: PROPERTIE_HAS { key = yytext; image[key]; }
+         | PROPERTIE_IS { key = yytext; image[key]; }
+         | PROPERTIE { key = yytext; image[key]; }
          ;
+
+reserverd_words: RESERVED_WORD { image[key].push_back(yytext); }
+			   ;
+
+id_class: IDCLASS { image[key].push_back(yytext); }
+		;
 
 %%
 

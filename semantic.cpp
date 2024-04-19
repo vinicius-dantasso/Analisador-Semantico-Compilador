@@ -1,10 +1,13 @@
 #include "semantic.h"
 
-Semantic::Semantic(vector<int> vec, unordered_map< int, vector<string> > tab) 
+Semantic::Semantic(vector<int> vec, unordered_map< string, vector<string> > tab, int tp) 
 {
     nextPos = 1;
     length = 0;
+    type = tp;
+
     copy(vec.begin(), vec.end(), back_inserter(tokens));
+    table = tab;
     VerifySemantic();
 }
 
@@ -75,6 +78,54 @@ void Semantic::SubclassSemantic()
 {
     bool bound = tokens.size() > 2;
     length++;
+
+    switch(type)
+    {
+        case 1:
+
+            vector<string> defined;
+            vector<string> called;
+
+            for(const auto& par : table)
+            {   
+                int size = par.second.size();
+                int saveIndex = 0;
+                if(size > 1)
+                {
+                    for(int i=0; i<size; i++)
+                    {
+                        string value = par.second[i];
+                        if(value == "some") 
+                        {
+                            defined.push_back(par.second[i+1]);
+                            cout << "Definidos -> " << par.second[i+1] << "\n";
+                        }
+                        else if(value == "only") saveIndex = i+1;
+                    }
+
+                    for(int j=saveIndex; j<size; j++)
+                    {
+                        string value = par.second[j];
+                        if(value != "or") 
+                        {
+                            called.push_back(value);
+                            cout << "Chamados -> " << value << "\n";
+                        }
+                    }
+                }
+            }
+
+            if(defined.size() == called.size())
+            {
+                cout << "Tudo certo\n";
+            }
+            else
+            {
+                cout << "Error: Algo de errado com Axioma de Fechamento\n";
+            }
+
+        break;
+    }
 
     if(bound)
     {

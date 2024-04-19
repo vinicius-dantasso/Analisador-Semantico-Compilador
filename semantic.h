@@ -20,10 +20,11 @@ class Semantic
 public:
     int nextPos;
     int length;
+    int type;
     vector<int> tokens;
-    unordered_map< int, vector<string> > table;
+    unordered_map< string, vector<string> > table;
 
-    Semantic(vector<int> vec, unordered_map< int, vector<string> > tab);
+    Semantic(vector<int> vec, unordered_map< string, vector<string> > tab, int tp);
     void VerifySemantic();
     void EquivalentSemantic();
     void SubclassSemantic();
