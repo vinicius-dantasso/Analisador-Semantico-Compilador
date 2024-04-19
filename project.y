@@ -4,6 +4,7 @@
 #include <cstring>
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include "semantic.h"
 using namespace std;
 
@@ -12,6 +13,7 @@ int isClass = 0;
 extern char * yytext;
 
 vector<int> token;
+unordered_map< int, vector<string> > image;
 
 Semantic * semantic;
 
@@ -35,27 +37,28 @@ classes: classPri classes
 
 
 // Classe Primitiva
-classPri: class subClassOf { semantic = new Semantic(token); }
-		| class subClassOf disjointClasses { cout << "Classe primitiva válida\n"; }
-		| class subClassOf individuals { cout << "Classe primitiva válida\n"; }
-		| class subClassOf disjointClasses individuals { cout << "Classe primitiva válida\n"; }
+classPri: class subClassOf { semantic = new Semantic(token, image); token.clear(); }
+		| class subClassOf disjointClasses { semantic = new Semantic(token, image); token.clear(); cout << "Classe primitiva válida\n"; }
+		| class subClassOf individuals { semantic = new Semantic(token, image); token.clear(); cout << "Classe primitiva válida\n"; }
+		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image); token.clear(); /* Forçando erro */ }
+		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image); token.clear(); cout << "Classe primitiva válida\n"; }
 	 	;
 
 // Classe Definida/Aninhada
-classDefAnin: class equivalentTo individuals { cout << "Classe Definida válida\n"; }
-			| class equivalentTo
+classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image); token.clear(); cout << "Classe Definida válida\n"; }
+			| class equivalentTo { semantic = new Semantic(token, image); token.clear(); }
 			;
 
 // Classe com Axioma Fechado
-classAxi: class subClassOf_Axi { cout << "Classe com axioma de fechamento válida\n"; }
+classAxi: class subClassOf_Axi { semantic = new Semantic(token, image); token.clear(); cout << "Classe com axioma de fechamento válida\n"; }
 		;
 	
 // Classe Enumerada
-classEnum: class equivalentToEnum { cout << "Classe enumerada válida\n"; }
+classEnum: class equivalentToEnum { semantic = new Semantic(token, image); token.clear(); cout << "Classe enumerada válida\n"; }
 		 ;
 
 // Classe Coberta
-classCober: class equivalentToCober { cout << "Classe coberta válida\n"; }
+classCober: class equivalentToCober { semantic = new Semantic(token, image); token.clear(); cout << "Classe coberta válida\n"; }
 		  ;
 
 // Define uma Class: Pizza
@@ -152,7 +155,7 @@ enum_list: IDINDIVIDUALS RELOP enum_list
 		 ;
 
 // Define uma DisjointClass
-disjointClasses: DISJOINTCLASSES disjointClasses_list
+disjointClasses: DISJOINTCLASSES disjointClasses_list { token.push_back(DISJOINTTOKEN); }
 			   ;
 
 // Diferentes formas que um DisjointClass pode se organizar
@@ -161,7 +164,7 @@ disjointClasses_list: disjointClasses_list RELOP IDCLASS
 					;
 
 // Define um Individuals
-individuals: INDIVIDUALS individuals_list
+individuals: INDIVIDUALS individuals_list { token.push_back(INDIVIDUALSTOKEN); }
 		   ;
 
 // Diferentes formas que um Individuals pode se organizar/

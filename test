@@ -3,3 +3,23 @@ Class: Counterpart
     SubClassOf: 
         Resource,
         historicallyDependsOn some OffereeUnconditionalAgreement
+
+    DisjointClasses:
+        Pizza, PizzaBase, PizzaTopping
+
+    Individuals:
+        CustomPizza1,
+        CustomPizza2
+
+Class: Pizza
+
+    SubClassOf:
+        hasBase some PizzaBase,
+        hasCaloricContent some xsd:integer
+
+    DisjointClasses:
+        Pizza, PizzaBase, PizzaTopping
+
+    Individuals:
+        CustomPizza1,
+        CustomPizza2
