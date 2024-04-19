@@ -15,7 +15,7 @@ extern char * yytext;
 
 vector<int> token;
 unordered_map< string, vector<string> > image;
-
+vector<string> faixa;
 Semantic * semantic;
 
 int yylex(void);
@@ -38,28 +38,28 @@ classes: classPri classes
 
 
 // Classe Primitiva
-classPri: class subClassOf { semantic = new Semantic(token, image, 0); token.clear(); }
-		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe primitiva válida\n"; }
-		| class subClassOf individuals { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe primitiva válida\n"; }
-		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0); token.clear(); /* Forçando erro */ }
-		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe primitiva válida\n"; }
+classPri: class subClassOf { semantic = new Semantic(token, image, 0, faixa); token.clear(); }
+		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe primitiva válida\n"; }
+		| class subClassOf individuals { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe primitiva válida\n"; }
+		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0, faixa); token.clear(); /* Forçando erro */ }
+		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe primitiva válida\n"; }
 	 	;
 
 // Classe Definida/Aninhada
-classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe Definida válida\n"; }
-			| class equivalentTo { semantic = new Semantic(token, image, 0); token.clear(); }
+classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe Definida válida\n"; }
+			| class equivalentTo { semantic = new Semantic(token, image, 0, faixa); token.clear(); }
 			;
 
 // Classe com Axioma Fechado
-classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1); token.clear(); cout << "Classe com axioma de fechamento válida\n"; }
+classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1, faixa); token.clear(); cout << "Classe com axioma de fechamento válida\n"; }
 		;
 	
 // Classe Enumerada
-classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe enumerada válida\n"; }
+classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe enumerada válida\n"; }
 		 ;
 
 // Classe Coberta
-classCober: class equivalentToCober { semantic = new Semantic(token, image, 0); token.clear(); cout << "Classe coberta válida\n"; }
+classCober: class equivalentToCober { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe coberta válida\n"; }
 		  ;
 
 // Define uma Class: Pizza
@@ -112,7 +112,7 @@ subClass_AxiList: id_class RELOP propertie reserverd_words id_class RELOP subCla
 				;
 
 // EquivalentTo para requisitos gerais
-equivalentTo: equivalent DATA_TYPE RELOP RELOP NUM RELOP RELOP 
+equivalentTo: equivalent DATA_TYPE RELOP relop num RELOP RELOP 
 			| equivalent descAnin { cout << "Classe Definida/Aninhada válida\n"; }
 			;
 
@@ -186,6 +186,8 @@ reserverd_words: RESERVED_WORD { image[key].push_back(yytext); }
 id_class: IDCLASS { image[key].push_back(yytext); }
 		;
 
+num: NUM {faixa.push_back(yytext);}
+relop: RELOP {faixa.push_back(yytext);}
 %%
 
 /* definido pelo analisador léxico */

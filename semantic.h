@@ -22,9 +22,11 @@ public:
     int length;
     int type;
     vector<int> tokens;
-    unordered_map< string, vector<string> > table;
+    vector<string> faixa;
+    vector<string> faixaVal;
+    unordered_map<string, vector<string>> table;
 
-    Semantic(vector<int> vec, unordered_map< string, vector<string> > tab, int tp);
+    Semantic(vector<int> vec, unordered_map<string, vector<string>> tab, int tp, vector<string> faixa);
     void VerifySemantic();
     void EquivalentSemantic();
     void SubclassSemantic();
@@ -32,5 +34,5 @@ public:
     void IndividualSemantic();
     void Error(int type);
     void DeleteSelf();
-
+    void Coercao();
 };

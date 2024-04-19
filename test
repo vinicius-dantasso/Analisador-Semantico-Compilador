@@ -1,7 +1,4 @@
-Class: MargheritaPizza
-
-    SubClassOf:
-        NamedPizza,
-        hasTopping some MozzarellaTopping,
-        hasTopping some TomatoTopping,
-        hasTopping only (MozzarellaTopping or TomatoTopping)
+Class: HighCaloriePizza
+    EquivalentTo:
+        Pizza
+            and (hasCaloricContent some xsd:integer[<= 300])
