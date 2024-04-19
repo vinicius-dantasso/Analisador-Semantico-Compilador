@@ -1,14 +1,16 @@
 #include "semantic.h"
 
-Semantic::Semantic(vector<int> vec, unordered_map<string, vector<string>> tab, int tp, vector<string> faixa)
+Semantic::Semantic(vector<int> vec, unordered_map<string, vector<string>> tab, int tp, vector<string> faixa, string valueString)
 {
     nextPos = 1;
     length = 0;
     type = tp;
-
+    value = valueString;
+    // value = std::stoi(valueString);
     copy(vec.begin(), vec.end(), back_inserter(tokens));
     table = tab;
     faixaVal = faixa;
+
     VerifySemantic();
 }
 
@@ -87,7 +89,10 @@ void Semantic::SubclassSemantic()
 {
     bool bound = tokens.size() > 2;
     length++;
-
+    if (!value.empty())
+    {
+        CoercaoPropriedades();
+    }
     switch (type)
     {
     case 1:
@@ -296,5 +301,28 @@ void Semantic::Coercao()
     catch (const std::out_of_range &e)
     {
         std::cout << "Erro de estouro de intervalo: " << e.what();
+    }
+}
+
+void Semantic::CoercaoPropriedades()
+{
+    // TODO: ver se lógica de coreção ficou correta
+    try
+    {
+        int valueInt = std::stoi(value);
+        if (valueInt > 0)
+        {
+            cout << "Tudo certo na coerção com propriedade"
+                 << "\n";
+        }
+        else
+        {
+            cout << "Mudando dado para valor existente"
+                 << "\n";
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
     }
 }

@@ -1,4 +1,4 @@
-Class: HighCaloriePizza
-    EquivalentTo:
-        Pizza
-            and (hasCaloricContent some xsd:integer[<= 300])
+Class: Employee
+    SubClassOf:
+        Person
+            and (ssn min -1 xsd:string)

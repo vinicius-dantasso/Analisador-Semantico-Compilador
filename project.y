@@ -17,7 +17,8 @@ vector<int> token;
 unordered_map< string, vector<string> > image;
 vector<string> faixa;
 Semantic * semantic;
-
+vector<string> vec_proprie;
+string valueString;
 int yylex(void);
 int yyparse(void);
 void yyerror(const char *);
@@ -38,28 +39,28 @@ classes: classPri classes
 
 
 // Classe Primitiva
-classPri: class subClassOf { semantic = new Semantic(token, image, 0, faixa); token.clear(); }
-		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe primitiva válida\n"; }
-		| class subClassOf individuals { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe primitiva válida\n"; }
-		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0, faixa); token.clear(); /* Forçando erro */ }
-		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe primitiva válida\n"; }
+classPri: class subClassOf { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); }
+		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe primitiva válida\n"; }
+		| class subClassOf individuals { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe primitiva válida\n"; }
+		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); /* Forçando erro */ }
+		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe primitiva válida\n"; }
 	 	;
 
 // Classe Definida/Aninhada
-classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe Definida válida\n"; }
-			| class equivalentTo { semantic = new Semantic(token, image, 0, faixa); token.clear(); }
+classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe Definida válida\n"; }
+			| class equivalentTo { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); }
 			;
 
 // Classe com Axioma Fechado
-classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1, faixa); token.clear(); cout << "Classe com axioma de fechamento válida\n"; }
+classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1, faixa, valueString); token.clear(); cout << "Classe com axioma de fechamento válida\n"; }
 		;
 	
 // Classe Enumerada
-classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe enumerada válida\n"; }
+classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe enumerada válida\n"; }
 		 ;
 
 // Classe Coberta
-classCober: class equivalentToCober { semantic = new Semantic(token, image, 0, faixa); token.clear(); cout << "Classe coberta válida\n"; }
+classCober: class equivalentToCober { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe coberta válida\n"; }
 		  ;
 
 // Define uma Class: Pizza
@@ -89,8 +90,10 @@ subClass_list: propertie reserverd_words id_class RELOP subClass_list
 			 | propertie propertie reserverd_words id_class RELOP subClass_list
              | propertie reserverd_words DATA_TYPE
 			 | id_class RELOP subClass_list
+			 | id_class subClass_list //alterado
 			 | id_class RELOP subClass_list2 subClass_list
 			 | id_class RELOP composedBySubClass subClass_list
+			 | RESERVED_WORD RELOP propertie RESERVED_WORD num_proprie DATA_TYPE RELOP //alteração subclass pode dá erro nos métodos já criados (mexe na imagem da precedêcia)
              ;
 composedBySubClass: RELOP propertie reserverd_words NUM id_class RELOP RELOP
 				  |	RELOP propertie reserverd_words NUM id_class RELOP reserverd_words composedBySubClass
@@ -187,7 +190,11 @@ id_class: IDCLASS { image[key].push_back(yytext); }
 		;
 
 num: NUM {faixa.push_back(yytext);}
+	;
 relop: RELOP {faixa.push_back(yytext);}
+	;
+num_proprie: NUM {valueString = yytext;}
+	;
 %%
 
 /* definido pelo analisador léxico */
