@@ -1,4 +1,4 @@
-Class: Employee
-    SubClassOf:
-        Person
-            and (ssn min -1 xsd:string)
+Class: InterestingPizza
+    EquivalentTo:
+        Pizza
+        and (hasTopping min 3 PizzaTopping)

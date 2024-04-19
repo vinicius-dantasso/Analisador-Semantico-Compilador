@@ -115,13 +115,14 @@ subClass_AxiList: id_class RELOP propertie reserverd_words id_class RELOP subCla
 				;
 
 // EquivalentTo para requisitos gerais
-equivalentTo: equivalent DATA_TYPE RELOP relop num RELOP RELOP 
-			| equivalent descAnin { cout << "Classe Definida/Aninhada válida\n"; }
+equivalentTo: equivalent DATA_TYPE RELOP relop num RELOP RELOP { token.push_back(EQUIVALENTTOKEN); }
+			| equivalent descAnin {token.push_back(EQUIVALENTTOKEN); cout << "Classe Definida/Aninhada válida\n"; } 
 			;
 
 equivalent: EQUIVALENTTO id_class reserverd_words RELOP propertie reserverd_words
 		  | EQUIVALENTTO id_class reserverd_words RELOP RELOP propertie reserverd_words
 		  | EQUIVALENTTO id_class reserverd_words propertie reserverd_words
+			| EQUIVALENTTO id_class reserverd_words RELOP reserverd_words {cout<< "entrou na certa \n";}
 		  ;
 
 descAnin: RELOP propertie reserverd_words id_class RELOP RELOP descAnin2
@@ -129,6 +130,7 @@ descAnin: RELOP propertie reserverd_words id_class RELOP RELOP descAnin2
 		| RELOP cober_list RELOP descAnin2
 		| id_class descAnin2
 		| id_class RELOP descAnin2
+		| EQUIVALENTTO id_class reserverd_words RELOP propertie reserverd_words num_proprie id_class RELOP
 		;
 
 descAnin2: reserverd_words RELOP propertie reserverd_words RELOP propertie reserverd_words id_class RELOP RELOP descAnin2

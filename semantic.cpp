@@ -239,68 +239,68 @@ void Semantic::Coercao()
     {
         if (faixaVal.at(0) == ">")
         {
-            meuInteiro = std::stoi(faixaVal.at(1));
+            meuInteiro = stoi(faixaVal.at(1));
             if (meuInteiro >= 400)
             {
-                std::cout << "Não precisou fazer coerção do tipo";
+                cout << "Não precisou fazer coerção do tipo";
             }
             else
             {
                 // TODO: checar se precisar fazer coerção na memória
                 coercao = true;
-                std::cout << "Coerção de tipo feita para 400";
+                cout << "Coerção de tipo feita para 400";
             }
         }
         else if (faixaVal.at(0) == "<")
         {
-            meuInteiro = std::stoi(faixaVal.at(1));
+            meuInteiro = stoi(faixaVal.at(1));
             if (meuInteiro > 400)
             {
-                std::cout << "Não precisou fazer coerção do tipo";
+                cout << "Não precisou fazer coerção do tipo";
             }
             else
             {
                 // TODO: checar se precisar fazer coerção na memória
                 coercao = true;
-                std::cout << "Coerção de tipo feita para 400";
+                cout << "Coerção de tipo feita para 400";
             }
         }
         else if (faixaVal.at(0) == "<=")
         {
-            meuInteiro = std::stoi(faixaVal.at(1));
+            meuInteiro = stoi(faixaVal.at(1));
             if (meuInteiro > 410)
             {
-                std::cout << "Não precisou fazer coerção do tipo";
+                cout << "Não precisou fazer coerção do tipo";
             }
             else
             {
                 // TODO: checar se precisar fazer coerção a nível de memória
                 coercao = true;
-                std::cout << "Coerção de tipo feita para 400";
+                cout << "Coerção de tipo feita para 400";
             }
         }
         else
         {
-            meuInteiro = std::stoi(faixaVal.at(1));
+            meuInteiro = stoi(faixaVal.at(1));
             if (meuInteiro >= 400)
             {
-                std::cout << "Não precisou fazer coerção do tipo";
+                cout << "Não precisou fazer coerção do tipo";
             }
             else
             {
                 // TODO: checar se precisar fazer coerção na memória
                 coercao = true;
-                std::cout << "Coerção de tipo feita para 400";
+                cout << "Coerção de tipo feita para 400";
             }
         }
     }
-    catch (const std::invalid_argument &e)
+    catch (const invalid_argument &e)
     {
-        std::cout << "Erro de argumento inválido: " << e.what();
+        cout << "Erro de argumento inválido: " << e.what();
     }
-    catch (const std::out_of_range &e)
+    catch (const out_of_range &e)
     {
-        std::cout << "Erro de estouro de intervalo: " << e.what();
+        cout << "Erro de estouro de intervalo: " << e.what();
     }
 }
 
@@ -309,7 +309,7 @@ void Semantic::CoercaoPropriedades()
     // TODO: ver se lógica de coreção ficou correta
     try
     {
-        int valueInt = std::stoi(value);
+        int valueInt = stoi(value);
         if (valueInt > 0)
         {
             cout << "Tudo certo na coerção com propriedade"
@@ -321,8 +321,8 @@ void Semantic::CoercaoPropriedades()
                  << "\n";
         }
     }
-    catch (const std::exception &e)
+    catch (const exception &e)
     {
-        std::cerr << e.what() << '\n';
+        cerr << e.what() << '\n';
     }
 }
