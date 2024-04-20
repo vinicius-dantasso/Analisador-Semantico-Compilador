@@ -2,14 +2,7 @@
 
 int Semantic::instance = 1;
 
-Semantic::Semantic(vector<int> vec, 
-        unordered_map<string, 
-        vector<string>> tab, 
-        int tp, 
-        vector<string> faixa, 
-        string valueString,
-        string classNa
-    )
+Semantic::Semantic(vector<int> vec, unordered_map<string, vector<string>> tab, int tp, vector<string> faixa, vector<string> valueString, string classNa)
 {
     nextPos = 1;
     length = 0;
@@ -21,19 +14,19 @@ Semantic::Semantic(vector<int> vec,
     table = tab;
     faixaVal = faixa;
 
-    int index = table.size()-1;
+    int index = table.size() - 1;
     int cont = 0;
     string remove;
-    for(const auto& par : table)
+    for (const auto &par : table)
     {
-        if(cont == index && Semantic::instance % 2 == 0)
+        if (cont == index && Semantic::instance % 2 == 0)
         {
             remove = par.first;
         }
         cont++;
     }
-    Semantic::instance++; 
-    table[remove] = unordered_map<string, vector<string> >::mapped_type();
+    Semantic::instance++;
+    table[remove] = unordered_map<string, vector<string>>::mapped_type();
 
     VerifySemantic();
 }
@@ -76,31 +69,35 @@ void Semantic::EquivalentSemantic()
 
     cout << "EquivalentTo:\n";
 
-    for(const auto& par : table)
+    for (const auto &par : table)
     {
         int size = par.second.size();
         int canShowMessage = 0;
-        if(par.first != "")
+        if (par.first != "")
         {
-            for(int i=0;i<size;i++)
+            for (int i = 0; i < size; i++)
             {
-                if(par.second[i].find("xsd:") != string::npos && canShowMessage == 0)
+                if (par.second[i].find("xsd:") != string::npos && canShowMessage == 0)
                 {
                     canShowMessage = 1;
-                    cout << "Property Type: \"" << par.first << "\" é do tipo data property" << "\n";
+                    cout << "Property Type: \"" << par.first << "\" é do tipo data property"
+                         << "\n";
                 }
-                else if(isupper(par.second[i][0]) && isalpha(par.second[i].back()) && canShowMessage == 0)
+                else if (isupper(par.second[i][0]) && isalpha(par.second[i].back()) && canShowMessage == 0)
                 {
                     canShowMessage = 1;
-                    cout << "Property Type: \"" << par.first << "\" é do tipo object property" << "\n";
+                    cout << "Property Type: \"" << par.first << "\" é do tipo object property"
+                         << "\n";
                 }
             }
         }
     }
 
-    if (!faixaVal.empty()) Coercao();
+    if (!faixaVal.empty())
+        Coercao();
 
-    if(!value.empty()) CoercaoPropriedades();
+    if (!value.empty())
+        CoercaoPropriedades();
 
     if (bound)
     {
@@ -128,7 +125,8 @@ void Semantic::EquivalentSemantic()
             break;
         }
     }
-    else DeleteSelf();
+    else
+        DeleteSelf();
 }
 
 void Semantic::SubclassSemantic()
@@ -138,66 +136,71 @@ void Semantic::SubclassSemantic()
 
     cout << "SubClassOf:\n";
 
-
-    for(const auto& par : table)
+    for (const auto &par : table)
     {
-        //cout << "Key -> " << par.first << "\n";
+        // cout << "Key -> " << par.first << "\n";
         int size = par.second.size();
         int canShowMessage = 0;
-        if(par.first != "")
+        if (par.first != "")
         {
-            for(int i=0;i<size;i++)
+            for (int i = 0; i < size; i++)
             {
-                //cout << "Value -> " << par.second[i] << "\n";
-                if(par.second[i].find("xsd:") != string::npos && canShowMessage == 0)
+                // cout << "Value -> " << par.second[i] << "\n";
+                if (par.second[i].find("xsd:") != string::npos && canShowMessage == 0)
                 {
                     canShowMessage = 1;
-                    cout << "Property Type: \"" << par.first << "\" é do tipo data property" << "\n";
+                    cout << "Property Type: \"" << par.first << "\" é do tipo data property"
+                         << "\n";
                 }
-                else if(isupper(par.second[i][0]) && isalpha(par.second[i].back()) && canShowMessage == 0)
+                else if (isupper(par.second[i][0]) && isalpha(par.second[i].back()) && canShowMessage == 0)
                 {
                     canShowMessage = 1;
-                    cout << "Property Type: \"" << par.first << "\" é do tipo object property" << "\n";
+                    cout << "Property Type: \"" << par.first << "\" é do tipo object property"
+                         << "\n";
                 }
             }
         }
     }
 
-    if (!value.empty()) CoercaoPropriedades();
+    if (value.size() != 0)
+        CoercaoPropriedades();
 
     switch (type)
     {
-        case 1:
+    case 1:
 
-            vector<string> defined;
-            vector<string> called;
+        vector<string> defined;
+        vector<string> called;
 
-            for (const auto &par : table)
+        for (const auto &par : table)
+        {
+            int size = par.second.size();
+            int saveIndex = 0;
+            if (size > 1 && par.first != "")
             {
-                int size = par.second.size();
-                int saveIndex = 0;
-                if (size > 1 && par.first != "")
+                for (int i = 0; i < size; i++)
                 {
-                    for (int i = 0; i < size; i++)
-                    {
-                        string value = par.second[i];
-                        if (value == "some") defined.push_back(par.second[i + 1]);
-                        else if (value == "only") saveIndex = i + 1;
-                    }
+                    string value = par.second[i];
+                    if (value == "some")
+                        defined.push_back(par.second[i + 1]);
+                    else if (value == "only")
+                        saveIndex = i + 1;
+                }
 
-                    for (int j = saveIndex; j < size; j++)
-                    {
-                        string value = par.second[j];
-                        if (value != "or") called.push_back(value);
-                    }
+                for (int j = saveIndex; j < size; j++)
+                {
+                    string value = par.second[j];
+                    if (value != "or")
+                        called.push_back(value);
                 }
             }
+        }
 
-            if (defined.size() != called.size())
-            {
-                cout << "Error: Algo de errado com Axioma de Fechamento\n";
-                table.clear();
-            }
+        if (defined.size() != called.size())
+        {
+            cout << "Error: Algo de errado com Axioma de Fechamento\n";
+            table.clear();
+        }
 
         break;
     }
@@ -221,7 +224,8 @@ void Semantic::SubclassSemantic()
             break;
         }
     }
-    else DeleteSelf();
+    else
+        DeleteSelf();
 }
 
 void Semantic::DisjointSemantic()
@@ -243,15 +247,18 @@ void Semantic::DisjointSemantic()
             break;
         }
     }
-    else DeleteSelf();
+    else
+        DeleteSelf();
 }
 
 void Semantic::IndividualSemantic()
 {
     bool bound = nextPos == tokens.size();
 
-    if (bound) DeleteSelf();
-    else Error(404); // Caso encontro qualquer outra coisa
+    if (bound)
+        DeleteSelf();
+    else
+        Error(404); // Caso encontro qualquer outra coisa
 }
 
 void Semantic::Coercao()
@@ -333,22 +340,26 @@ void Semantic::Coercao()
 
 void Semantic::CoercaoPropriedades()
 {
-    // TODO: ver se lógica de coreção ficou correta
-    try
+    int valueInt;
+    for (int i = 0; i < value.size(); i++)
     {
-        int valueInt = stoi(value);
-        if (valueInt > 0)
+        valueInt = stoi(value.at(i));
+        try
         {
-            cout << "Tudo certo na coerção com propriedade\n";
+
+            if (valueInt > 0)
+            {
+                cout << "Tudo certo na coerção com propriedade\n";
+            }
+            else
+            {
+                cout << "Valor negativo \"" << value.at(i) << "\" não permitido\n";
+            }
         }
-        else
+        catch (const exception &e)
         {
-            cout << "Valor negativo \"" << value << "\" não permitido\n";
+            cerr << e.what() << '\n';
         }
-    }
-    catch (const exception &e)
-    {
-        cerr << e.what() << '\n';
     }
 }
 

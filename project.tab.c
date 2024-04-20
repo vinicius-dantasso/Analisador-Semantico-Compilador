@@ -80,10 +80,9 @@ using namespace std;
 
 string className = "";
 string key = "";
-string valueString;
 int isClass = 0;
 extern char * yytext;
-
+vector<string> valueString;
 vector<int> token;
 vector<string> faixa;
 vector<string> vec_proprie;
@@ -95,7 +94,7 @@ int yylex(void);
 int yyparse(void);
 void yyerror(const char *);
 
-#line 99 "project.tab.c"
+#line 98 "project.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -560,16 +559,16 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    34,    34,    35,    36,    37,    38,    39,    44,    45,
-      46,    47,    48,    52,    53,    57,    58,    59,    60,    64,
-      68,    72,    80,    81,    85,    86,    87,    88,    89,    90,
-      91,    92,    93,    94,    95,    96,    97,    98,    99,   100,
-     101,   103,   104,   107,   108,   109,   113,   117,   118,   119,
-     123,   124,   127,   128,   129,   130,   133,   134,   135,   136,
-     137,   138,   139,   142,   143,   144,   145,   146,   147,   148,
-     149,   150,   154,   158,   159,   163,   167,   168,   172,   176,
-     177,   181,   185,   186,   190,   191,   192,   195,   198,   201,
-     204,   207,   210
+       0,    33,    33,    34,    35,    36,    37,    38,    43,    44,
+      45,    46,    47,    51,    52,    56,    57,    58,    59,    63,
+      67,    71,    79,    80,    84,    85,    86,    87,    88,    89,
+      90,    91,    92,    93,    94,    95,    96,    97,    98,    99,
+     100,   102,   103,   106,   107,   108,   112,   116,   117,   118,
+     122,   123,   126,   127,   128,   129,   132,   133,   134,   135,
+     136,   137,   138,   141,   142,   143,   144,   145,   146,   147,
+     148,   149,   153,   157,   158,   162,   166,   167,   171,   175,
+     176,   180,   184,   185,   189,   190,   191,   194,   197,   200,
+     203,   206,   209
 };
 #endif
 
@@ -1275,191 +1274,191 @@ yyreduce:
   switch (yyn)
     {
   case 8: /* classPri: class subClassOf  */
-#line 44 "project.y"
+#line 43 "project.y"
                            { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1281 "project.tab.c"
+#line 1280 "project.tab.c"
     break;
 
   case 9: /* classPri: class subClassOf disjointClasses  */
-#line 45 "project.y"
+#line 44 "project.y"
                                                    { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1287 "project.tab.c"
+#line 1286 "project.tab.c"
     break;
 
   case 10: /* classPri: class subClassOf individuals  */
-#line 46 "project.y"
+#line 45 "project.y"
                                                { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1293 "project.tab.c"
+#line 1292 "project.tab.c"
     break;
 
   case 11: /* classPri: class subClassOf individuals disjointClasses  */
-#line 47 "project.y"
+#line 46 "project.y"
                                                                { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); /* Forçando erro */ }
-#line 1299 "project.tab.c"
+#line 1298 "project.tab.c"
     break;
 
   case 12: /* classPri: class subClassOf disjointClasses individuals  */
-#line 48 "project.y"
+#line 47 "project.y"
                                                                { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1305 "project.tab.c"
+#line 1304 "project.tab.c"
     break;
 
   case 13: /* classDefAnin: class equivalentTo individuals  */
-#line 52 "project.y"
+#line 51 "project.y"
                                              { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1311 "project.tab.c"
+#line 1310 "project.tab.c"
     break;
 
   case 14: /* classDefAnin: class equivalentTo  */
-#line 53 "project.y"
+#line 52 "project.y"
                                              { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1317 "project.tab.c"
+#line 1316 "project.tab.c"
     break;
 
   case 15: /* classAxi: class subClassOf_Axi  */
-#line 57 "project.y"
+#line 56 "project.y"
                                { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1323 "project.tab.c"
+#line 1322 "project.tab.c"
     break;
 
   case 16: /* classAxi: class subClassOf_Axi disjointClasses individuals  */
-#line 58 "project.y"
+#line 57 "project.y"
                                                                    { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1329 "project.tab.c"
+#line 1328 "project.tab.c"
     break;
 
   case 17: /* classAxi: class subClassOf_Axi disjointClasses  */
-#line 59 "project.y"
+#line 58 "project.y"
                                                        { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1335 "project.tab.c"
+#line 1334 "project.tab.c"
     break;
 
   case 18: /* classAxi: class subClassOf_Axi individuals  */
-#line 60 "project.y"
+#line 59 "project.y"
                                                    { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1341 "project.tab.c"
+#line 1340 "project.tab.c"
     break;
 
   case 19: /* classEnum: class equivalentToEnum  */
-#line 64 "project.y"
+#line 63 "project.y"
                                   { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1347 "project.tab.c"
+#line 1346 "project.tab.c"
     break;
 
   case 20: /* classCober: class equivalentToCober  */
-#line 68 "project.y"
+#line 67 "project.y"
                                     { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-#line 1353 "project.tab.c"
+#line 1352 "project.tab.c"
     break;
 
   case 21: /* class: CLASS IDCLASS  */
-#line 72 "project.y"
+#line 71 "project.y"
                      { 
 		isClass = 1; 
 		className = yytext;
 		token.push_back(CLASSTOKEN);
  	}
-#line 1363 "project.tab.c"
+#line 1362 "project.tab.c"
     break;
 
   case 22: /* subClassOf: SUBCLASSOF subClass_list  */
-#line 80 "project.y"
+#line 79 "project.y"
                                      { token.push_back(SUBCLASSTOKEN); }
-#line 1369 "project.tab.c"
+#line 1368 "project.tab.c"
     break;
 
   case 23: /* subClassOf: SUBCLASSOF id_class  */
-#line 81 "project.y"
+#line 80 "project.y"
                                         { token.push_back(SUBCLASSTOKEN); }
-#line 1375 "project.tab.c"
+#line 1374 "project.tab.c"
     break;
 
   case 46: /* subClassOf_Axi: SUBCLASSOF subClass_AxiList  */
-#line 113 "project.y"
+#line 112 "project.y"
                                             { token.push_back(SUBCLASSTOKEN); }
-#line 1381 "project.tab.c"
+#line 1380 "project.tab.c"
     break;
 
   case 50: /* equivalentTo: equivalent data_type RELOP relop num RELOP RELOP  */
-#line 123 "project.y"
+#line 122 "project.y"
                                                                { token.push_back(EQUIVALENTTOKEN); }
-#line 1387 "project.tab.c"
+#line 1386 "project.tab.c"
     break;
 
   case 51: /* equivalentTo: equivalent descAnin  */
-#line 124 "project.y"
+#line 123 "project.y"
                                               {token.push_back(EQUIVALENTTOKEN); }
-#line 1393 "project.tab.c"
+#line 1392 "project.tab.c"
     break;
 
   case 78: /* disjointClasses: DISJOINTCLASSES disjointClasses_list  */
-#line 172 "project.y"
+#line 171 "project.y"
                                                       { token.push_back(DISJOINTTOKEN); }
-#line 1399 "project.tab.c"
+#line 1398 "project.tab.c"
     break;
 
   case 81: /* individuals: INDIVIDUALS individuals_list  */
-#line 181 "project.y"
+#line 180 "project.y"
                                           { token.push_back(INDIVIDUALSTOKEN); }
-#line 1405 "project.tab.c"
+#line 1404 "project.tab.c"
     break;
 
   case 84: /* propertie: PROPERTIE_HAS  */
-#line 190 "project.y"
+#line 189 "project.y"
                          { key = yytext; image[key]; }
-#line 1411 "project.tab.c"
+#line 1410 "project.tab.c"
     break;
 
   case 85: /* propertie: PROPERTIE_IS  */
-#line 191 "project.y"
+#line 190 "project.y"
                         { key = yytext; image[key]; }
-#line 1417 "project.tab.c"
+#line 1416 "project.tab.c"
     break;
 
   case 86: /* propertie: PROPERTIE  */
-#line 192 "project.y"
+#line 191 "project.y"
                      { key = yytext; image[key]; }
-#line 1423 "project.tab.c"
+#line 1422 "project.tab.c"
     break;
 
   case 87: /* reserverd_words: RESERVED_WORD  */
-#line 195 "project.y"
+#line 194 "project.y"
                                { image[key].push_back(yytext); }
-#line 1429 "project.tab.c"
+#line 1428 "project.tab.c"
     break;
 
   case 88: /* id_class: IDCLASS  */
-#line 198 "project.y"
+#line 197 "project.y"
                   { image[key].push_back(yytext); }
-#line 1435 "project.tab.c"
+#line 1434 "project.tab.c"
     break;
 
   case 89: /* num: NUM  */
-#line 201 "project.y"
+#line 200 "project.y"
          { faixa.push_back(yytext); }
-#line 1441 "project.tab.c"
+#line 1440 "project.tab.c"
     break;
 
   case 90: /* relop: RELOP  */
-#line 204 "project.y"
+#line 203 "project.y"
              { faixa.push_back(yytext); }
-#line 1447 "project.tab.c"
+#line 1446 "project.tab.c"
     break;
 
   case 91: /* num_proprie: NUM  */
-#line 207 "project.y"
-                 { valueString = yytext; }
-#line 1453 "project.tab.c"
+#line 206 "project.y"
+                 { valueString.push_back(yytext); }
+#line 1452 "project.tab.c"
     break;
 
   case 92: /* data_type: DATA_TYPE  */
-#line 210 "project.y"
+#line 209 "project.y"
                      { image[key].push_back(yytext); }
-#line 1459 "project.tab.c"
+#line 1458 "project.tab.c"
     break;
 
 
-#line 1463 "project.tab.c"
+#line 1462 "project.tab.c"
 
       default: break;
     }
@@ -1652,7 +1651,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 212 "project.y"
+#line 211 "project.y"
 
 
 /* definido pelo analisador léxico */

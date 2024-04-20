@@ -10,10 +10,9 @@ using namespace std;
 
 string className = "";
 string key = "";
-string valueString;
 int isClass = 0;
 extern char * yytext;
-
+vector<string> valueString;
 vector<int> token;
 vector<string> faixa;
 vector<string> vec_proprie;
@@ -204,7 +203,7 @@ num: NUM { faixa.push_back(yytext); }
 relop: RELOP { faixa.push_back(yytext); }
 	 ;
 
-num_proprie: NUM { valueString = yytext; }
+num_proprie: NUM { valueString.push_back(yytext); }
 		   ;
 
 data_type: DATA_TYPE { image[key].push_back(yytext); }
