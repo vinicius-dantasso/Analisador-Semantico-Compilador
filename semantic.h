@@ -32,17 +32,16 @@ public:
     vector<int> lines;
     vector<string> faixa;
     vector<string> faixaVal;
-    unordered_map<string, vector<string>> table;
+    unordered_map<string, vector<string> > table;
 
     Semantic(
-        vector<int> vec,
-        unordered_map<string,
-                      vector<string>>
-            tab,
-        int tp,
-        vector<string> faixa,
-        vector<string> valueString,
-        string classNa);
+            vector<int> vec,
+            unordered_map<string, vector<string>> tab,
+            int tp,
+            vector<string> faixa,
+            vector<string> valueString,
+            string classNa
+        );
 
     void VerifySemantic();
     void EquivalentSemantic();

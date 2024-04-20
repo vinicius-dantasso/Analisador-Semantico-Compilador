@@ -40,31 +40,31 @@ classes: classPri classes
 
 
 // Classe Primitiva
-classPri: class subClassOf { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-		| class subClassOf individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); /* Forçando erro */ }
-		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+classPri: class subClassOf { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; /* Forçando erro */ }
+		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 	 	;
 
 // Classe Definida/Aninhada
-classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-			| class equivalentTo { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+			| class equivalentTo { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 			;
 
 // Classe com Axioma Fechado
-classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-		| class subClassOf_Axi disjointClasses individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-		| class subClassOf_Axi disjointClasses { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
-		| class subClassOf_Axi individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf_Axi disjointClasses individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf_Axi disjointClasses { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf_Axi individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 		;
 	
 // Classe Enumerada
-classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 		 ;
 
 // Classe Coberta
-classCober: class equivalentToCober { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+classCober: class equivalentToCober { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 		  ;
 
 // Define uma Class: Pizza
@@ -241,7 +241,7 @@ void yyerror(const char * s)
 
 	if(isClass == 1) {
 		/* mensagem de erro exibe o símbolo que causou erro e o número da linha */
-    	cout << "Erro sintático: símbolo \"" << yytext << "\" (linha " << yylineno << ") Na classe " << className << "\n\n";
+    	cout << "\033[1;31m" << "Erro sintático: símbolo \"" << yytext << "\" (linha " << yylineno << ") Na classe " << className << "\033[0m" << "\n\n";
 		isClass = 2;
 		token.clear(); image.clear(); faixa.clear(); vec_proprie.clear();
 	}

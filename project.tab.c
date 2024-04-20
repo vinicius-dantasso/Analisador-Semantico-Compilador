@@ -1275,79 +1275,79 @@ yyreduce:
     {
   case 8: /* classPri: class subClassOf  */
 #line 43 "project.y"
-                           { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                           { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1280 "project.tab.c"
     break;
 
   case 9: /* classPri: class subClassOf disjointClasses  */
 #line 44 "project.y"
-                                                   { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                                                   { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1286 "project.tab.c"
     break;
 
   case 10: /* classPri: class subClassOf individuals  */
 #line 45 "project.y"
-                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1292 "project.tab.c"
     break;
 
   case 11: /* classPri: class subClassOf individuals disjointClasses  */
 #line 46 "project.y"
-                                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); /* Forçando erro */ }
+                                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; /* Forçando erro */ }
 #line 1298 "project.tab.c"
     break;
 
   case 12: /* classPri: class subClassOf disjointClasses individuals  */
 #line 47 "project.y"
-                                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1304 "project.tab.c"
     break;
 
   case 13: /* classDefAnin: class equivalentTo individuals  */
 #line 51 "project.y"
-                                             { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                                             { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1310 "project.tab.c"
     break;
 
   case 14: /* classDefAnin: class equivalentTo  */
 #line 52 "project.y"
-                                             { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                                             { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1316 "project.tab.c"
     break;
 
   case 15: /* classAxi: class subClassOf_Axi  */
 #line 56 "project.y"
-                               { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                               { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1322 "project.tab.c"
     break;
 
   case 16: /* classAxi: class subClassOf_Axi disjointClasses individuals  */
 #line 57 "project.y"
-                                                                   { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                                                                   { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1328 "project.tab.c"
     break;
 
   case 17: /* classAxi: class subClassOf_Axi disjointClasses  */
 #line 58 "project.y"
-                                                       { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                                                       { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1334 "project.tab.c"
     break;
 
   case 18: /* classAxi: class subClassOf_Axi individuals  */
 #line 59 "project.y"
-                                                   { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                                                   { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1340 "project.tab.c"
     break;
 
   case 19: /* classEnum: class equivalentToEnum  */
 #line 63 "project.y"
-                                  { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                                  { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1346 "project.tab.c"
     break;
 
   case 20: /* classCober: class equivalentToCober  */
 #line 67 "project.y"
-                                    { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+                                    { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 #line 1352 "project.tab.c"
     break;
 
@@ -1685,7 +1685,7 @@ void yyerror(const char * s)
 
 	if(isClass == 1) {
 		/* mensagem de erro exibe o símbolo que causou erro e o número da linha */
-    	cout << "Erro sintático: símbolo \"" << yytext << "\" (linha " << yylineno << ") Na classe " << className << "\n\n";
+    	cout << "\033[1;31m" << "Erro sintático: símbolo \"" << yytext << "\" (linha " << yylineno << ") Na classe " << className << "\033[0m" << "\n\n";
 		isClass = 2;
 		token.clear(); image.clear(); faixa.clear(); vec_proprie.clear();
 	}

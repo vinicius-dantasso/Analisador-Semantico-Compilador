@@ -2,7 +2,13 @@
 
 int Semantic::instance = 1;
 
-Semantic::Semantic(vector<int> vec, unordered_map<string, vector<string>> tab, int tp, vector<string> faixa, vector<string> valueString, string classNa)
+Semantic::Semantic(vector<int> vec, 
+        unordered_map<string, vector<string>> tab, 
+        int tp, 
+        vector<string> faixa, 
+        vector<string> valueString, 
+        string classNa
+    )
 {
     nextPos = 1;
     length = 0;
@@ -39,7 +45,7 @@ void Semantic::VerifySemantic()
     length++;
 
     cout << "======================================================\n";
-    cout << "=== Análise Semântica da Classe " << className << " ===\n";
+    cout << "\t=== Análise da Classe " << className << " ===\n";
     switch (begin)
     {
     case CLASSTOKEN:
@@ -198,7 +204,7 @@ void Semantic::SubclassSemantic()
 
         if (defined.size() != called.size())
         {
-            cout << "Error: Algo de errado com Axioma de Fechamento\n";
+            cout << "\033[1;31m" << "Error: Algo de errado com Axioma de Fechamento" << "\033[0m" << "\n";
             table.clear();
         }
 
@@ -274,57 +280,41 @@ void Semantic::Coercao()
         if (faixaVal.at(0) == ">")
         {
             meuInteiro = stoi(faixaVal.at(1));
-            if (meuInteiro >= 400)
-            {
-                cout << "Não precisou fazer coerção do tipo\n";
-            }
-            else
+            if (meuInteiro < 400)
             {
                 // TODO: checar se precisar fazer coerção na memória
                 coercao = true;
-                cout << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor\n";
+                cout << "\033[1;31m" << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor" << "\033[0m" << "\n";
             }
         }
         else if (faixaVal.at(0) == "<")
         {
             meuInteiro = stoi(faixaVal.at(1));
-            if (meuInteiro > 400)
-            {
-                cout << "Não precisou fazer coerção do tipo\n";
-            }
-            else
+            if (meuInteiro < 400)
             {
                 // TODO: checar se precisar fazer coerção na memória
                 coercao = true;
-                cout << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor\n";
+                cout << "\033[1;31m" << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor" << "\033[0m" << "\n";
             }
         }
         else if (faixaVal.at(0) == "<=")
         {
             meuInteiro = stoi(faixaVal.at(1));
-            if (meuInteiro > 410)
-            {
-                cout << "Não precisou fazer coerção do tipo\n";
-            }
-            else
+            if (meuInteiro < 410)
             {
                 // TODO: checar se precisar fazer coerção a nível de memória
                 coercao = true;
-                cout << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor\n";
+                cout << "\033[1;31m" << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor" << "\033[0m" << "\n";
             }
         }
         else
         {
             meuInteiro = stoi(faixaVal.at(1));
-            if (meuInteiro >= 400)
-            {
-                cout << "Não precisou fazer coerção do tipo\n";
-            }
-            else
+            if (meuInteiro < 400)
             {
                 // TODO: checar se precisar fazer coerção na memória
                 coercao = true;
-                cout << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor\n";
+                cout << "\033[1;31m" << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor" << "\033[0m" << "\n";
             }
         }
     }
@@ -347,13 +337,9 @@ void Semantic::CoercaoPropriedades()
         try
         {
 
-            if (valueInt > 0)
+            if (valueInt < 0)
             {
-                cout << "Tudo certo na coerção com propriedade\n";
-            }
-            else
-            {
-                cout << "Valor negativo \"" << value.at(i) << "\" não permitido\n";
+                cout << "\033[1;31m" << "Valor negativo \"" << value.at(i) << "\" não permitido" << "\033[0m" << "\n";
             }
         }
         catch (const exception &e)
@@ -368,11 +354,11 @@ void Semantic::Error(int type)
     switch (type)
     {
     case 0:
-        cout << "Inicializador de Classe não encontrado\n";
+        cout << "\033[1;31m" << "Inicializador de Classe não encontrado" << "\033[0m" << "\n";
     case 1:
-        cout << "Erro de precedência: EquivalentTo aparecendo após SubClassOf\n";
+        cout << "\033[1;31m" << "Erro de precedência: EquivalentTo aparecendo após SubClassOf" << "\033[0m" << "\n";
     case 404:
-        cout << "Erro de precedência\n";
+        cout << "\033[1;31m" << "Erro de precedência" << "\033[0m" << "\n";
     }
     DeleteSelf();
 }

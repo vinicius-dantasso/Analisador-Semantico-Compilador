@@ -11,6 +11,14 @@ Class: Pizza
         CustomPizza1,
         CustomPizza2
 
+Class: Evaluated
+
+    EquivalentTo: 
+        BrokerServiceProvider or Connector or CoreParticipant
+    
+    SubClassOf: 
+        FunctionalComplex
+
 Class: MargheritaPizza
 
     SubClassOf:
