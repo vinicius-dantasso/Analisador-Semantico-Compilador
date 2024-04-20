@@ -53,29 +53,3 @@ Class: LowCaloriePizza
     EquivalentTo:
         Pizza
         and (hasCaloricContent some xsd:integer[< 400])
-
-Class: InterestingPizza
-
-    EquivalentTo:
-        Pizza
-        and (hasTopping min 3 PizzaTopping)
-
-Class: Employee
-
-    SubClassOf:
-        Person
-        and (ssn min 1 xsd:string)
-
-Class: Customer
-
-    EquivalentTo:
-        Person
-        and (purchasedPizza some Pizza)
-        and (hasPhone some xsd:string)
-
-Class: EvaluationFacility
-
-    SubClassOf:
-        IntermediaryParticipant,
-        emitsReport some EvaluationReport,
-        mediates some EvaluationAct

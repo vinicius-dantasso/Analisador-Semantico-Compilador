@@ -8,17 +8,19 @@
 #include "semantic.h"
 using namespace std;
 
-char vet[200];
-int isClass = 0;
+string className = "";
 string key = "";
+string valueString;
+int isClass = 0;
 extern char * yytext;
 
 vector<int> token;
-unordered_map< string, vector<string> > image;
 vector<string> faixa;
-Semantic * semantic;
 vector<string> vec_proprie;
-string valueString;
+unordered_map< string, vector<string> > image;
+
+Semantic * semantic;
+
 int yylex(void);
 int yyparse(void);
 void yyerror(const char *);
@@ -39,34 +41,37 @@ classes: classPri classes
 
 
 // Classe Primitiva
-classPri: class subClassOf { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); }
-		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe primitiva válida\n"; }
-		| class subClassOf individuals { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe primitiva válida\n"; }
-		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); /* Forçando erro */ }
-		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe primitiva válida\n"; }
+classPri: class subClassOf { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+		| class subClassOf individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); /* Forçando erro */ }
+		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
 	 	;
 
 // Classe Definida/Aninhada
-classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe Definida válida\n"; }
-			| class equivalentTo { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); }
+classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+			| class equivalentTo { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
 			;
 
 // Classe com Axioma Fechado
-classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1, faixa, valueString); token.clear(); cout << "Classe com axioma de fechamento válida\n"; }
+classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+		| class subClassOf_Axi disjointClasses individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+		| class subClassOf_Axi disjointClasses { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
+		| class subClassOf_Axi individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
 		;
 	
 // Classe Enumerada
-classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe enumerada válida\n"; }
+classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
 		 ;
 
 // Classe Coberta
-classCober: class equivalentToCober { semantic = new Semantic(token, image, 0, faixa, valueString); token.clear(); cout << "Classe coberta válida\n"; }
+classCober: class equivalentToCober { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); }
 		  ;
 
 // Define uma Class: Pizza
 class: CLASS IDCLASS { 
 		isClass = 1; 
-		strcpy(vet,yytext);
+		className = yytext;
 		token.push_back(CLASSTOKEN);
  	}
 	 ;
@@ -78,7 +83,7 @@ subClassOf: SUBCLASSOF subClass_list { token.push_back(SUBCLASSTOKEN); }
 
 // Diferentes formas que uma subClassOf geral pode se organizar
 subClass_list: propertie reserverd_words id_class RELOP subClass_list
-             | propertie reserverd_words DATA_TYPE RELOP subClass_list
+             | propertie reserverd_words data_type RELOP subClass_list
 			 | propertie reserverd_words NUM RELOP id_class subClass_list
 			 | propertie reserverd_words NUM id_class
 			 | propertie reserverd_words NUM id_class RELOP subClass_list
@@ -88,12 +93,12 @@ subClass_list: propertie reserverd_words id_class RELOP subClass_list
 			 | propertie reserverd_words id_class RELOP subClass_list
 			 | propertie propertie reserverd_words id_class
 			 | propertie propertie reserverd_words id_class RELOP subClass_list
-             | propertie reserverd_words DATA_TYPE
+             | propertie reserverd_words data_type
 			 | id_class RELOP subClass_list
 			 | id_class subClass_list //alterado
 			 | id_class RELOP subClass_list2 subClass_list
 			 | id_class RELOP composedBySubClass subClass_list
-			 | RESERVED_WORD RELOP propertie RESERVED_WORD num_proprie DATA_TYPE RELOP //alteração subclass pode dá erro nos métodos já criados (mexe na imagem da precedêcia)
+			 | RESERVED_WORD RELOP propertie RESERVED_WORD num_proprie data_type RELOP //alteração subclass pode dá erro nos métodos já criados (mexe na imagem da precedêcia)
              ;
 composedBySubClass: RELOP propertie reserverd_words NUM id_class RELOP RELOP
 				  |	RELOP propertie reserverd_words NUM id_class RELOP reserverd_words composedBySubClass
@@ -115,14 +120,14 @@ subClass_AxiList: id_class RELOP propertie reserverd_words id_class RELOP subCla
 				;
 
 // EquivalentTo para requisitos gerais
-equivalentTo: equivalent DATA_TYPE RELOP relop num RELOP RELOP { token.push_back(EQUIVALENTTOKEN); }
-			| equivalent descAnin {token.push_back(EQUIVALENTTOKEN); cout << "Classe Definida/Aninhada válida\n"; } 
+equivalentTo: equivalent data_type RELOP relop num RELOP RELOP { token.push_back(EQUIVALENTTOKEN); }
+			| equivalent descAnin {token.push_back(EQUIVALENTTOKEN); } 
 			;
 
 equivalent: EQUIVALENTTO id_class reserverd_words RELOP propertie reserverd_words
 		  | EQUIVALENTTO id_class reserverd_words RELOP RELOP propertie reserverd_words
 		  | EQUIVALENTTO id_class reserverd_words propertie reserverd_words
-			| EQUIVALENTTO id_class reserverd_words RELOP reserverd_words {cout<< "entrou na certa \n";}
+		  | EQUIVALENTTO id_class reserverd_words RELOP propertie reserverd_words num_proprie id_class RELOP
 		  ;
 
 descAnin: RELOP propertie reserverd_words id_class RELOP RELOP descAnin2
@@ -131,15 +136,17 @@ descAnin: RELOP propertie reserverd_words id_class RELOP RELOP descAnin2
 		| id_class descAnin2
 		| id_class RELOP descAnin2
 		| EQUIVALENTTO id_class reserverd_words RELOP propertie reserverd_words num_proprie id_class RELOP
+		|
 		;
 
 descAnin2: reserverd_words RELOP propertie reserverd_words RELOP propertie reserverd_words id_class RELOP RELOP descAnin2
 		 | reserverd_words RELOP propertie reserverd_words RELOP cober_list RELOP RELOP descAnin2
-		 | reserverd_words RELOP propertie reserverd_words NUM id_class RELOP descAnin2
+		 | reserverd_words RELOP propertie reserverd_words num_proprie id_class RELOP descAnin2
 		 | reserverd_words RELOP propertie reserverd_words id_class RELOP descAnin2
 		 | reserverd_words RELOP propertie reserverd_words id_class RELOP RELOP descAnin2
 		 | reserverd_words propertie reserverd_words id_class descAnin2
-		 | reserverd_words propertie reserverd_words NUM id_class descAnin2
+		 | reserverd_words propertie reserverd_words num_proprie id_class descAnin2
+		 | reserverd_words RELOP propertie RESERVED_WORD data_type RELOP descAnin2
 		 |
 		 ;
 
@@ -166,8 +173,8 @@ disjointClasses: DISJOINTCLASSES disjointClasses_list { token.push_back(DISJOINT
 			   ;
 
 // Diferentes formas que um DisjointClass pode se organizar
-disjointClasses_list: disjointClasses_list RELOP id_class
-					| id_class
+disjointClasses_list: disjointClasses_list RELOP IDCLASS
+					| IDCLASS
 					;
 
 // Define um Individuals
@@ -191,12 +198,17 @@ reserverd_words: RESERVED_WORD { image[key].push_back(yytext); }
 id_class: IDCLASS { image[key].push_back(yytext); }
 		;
 
-num: NUM {faixa.push_back(yytext);}
-	;
-relop: RELOP {faixa.push_back(yytext);}
-	;
-num_proprie: NUM {valueString = yytext;}
-	;
+num: NUM { faixa.push_back(yytext); }
+   ;
+
+relop: RELOP { faixa.push_back(yytext); }
+	 ;
+
+num_proprie: NUM { valueString = yytext; }
+		   ;
+
+data_type: DATA_TYPE { image[key].push_back(yytext); }
+		 ;
 %%
 
 /* definido pelo analisador léxico */
@@ -230,8 +242,9 @@ void yyerror(const char * s)
 
 	if(isClass == 1) {
 		/* mensagem de erro exibe o símbolo que causou erro e o número da linha */
-    	cout << "Erro sintático: símbolo \"" << yytext << "\" (linha " << yylineno << ") Na classe " << vet << "\n";
+    	cout << "Erro sintático: símbolo \"" << yytext << "\" (linha " << yylineno << ") Na classe " << className << "\n\n";
 		isClass = 2;
+		token.clear(); image.clear(); faixa.clear(); vec_proprie.clear();
 	}
 	yyparse();
 }
