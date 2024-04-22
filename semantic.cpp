@@ -2,14 +2,14 @@
 
 int Semantic::instance = 1;
 
-Semantic::Semantic(vector<int> vec, 
-        unordered_map<string, vector<string>> tab, 
-        int tp, 
-        vector<string> faixa, 
-        vector<string> valueString, 
-        string classNa
-    )
+Semantic::Semantic(vector<int> vec,
+                   unordered_map<string, vector<string>> tab,
+                   int tp,
+                   vector<string> faixa,
+                   vector<string> valueString,
+                   string classNa, string tipo)
 {
+    type_coercao = tipo;
     nextPos = 1;
     length = 0;
     type = tp;
@@ -76,8 +76,7 @@ void Semantic::EquivalentSemantic()
     cout << "EquivalentTo:\n";
 
     DataType();
-
-    if (!faixaVal.empty())
+    if (!faixaVal.empty() && (type_coercao == "xsd:integer"))
         Coercao();
 
     if (!value.empty())
@@ -158,7 +157,10 @@ void Semantic::SubclassSemantic()
 
         if (defined.size() != called.size())
         {
-            cout << "\033[1;31m" << "Error: Algo de errado com Axioma de Fechamento" << "\033[0m" << "\n";
+            cout << "\033[1;31m"
+                 << "Error: Algo de errado com Axioma de Fechamento"
+                 << "\033[0m"
+                 << "\n";
             table.clear();
         }
 
@@ -228,47 +230,19 @@ void Semantic::Coercao()
 
     try
     {
-        if (faixaVal.at(0) == ">")
+        if ((faixaVal.at(0) == ">") || (faixaVal.at(0) == "<") || (faixaVal.at(0) == "<=") || (faixaVal.at(0) == ">="))
         {
             meuInteiro = stoi(faixaVal.at(1));
             if (meuInteiro < 400)
             {
-                // TODO: checar se precisar fazer coerção na memória
                 coercao = true;
-                cout << "\033[1;31m" << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor" << "\033[0m" << "\n";
+                cout << "\033[1;31m"
+                     << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor"
+                     << "\033[0m"
+                     << "\n";
             }
         }
-        else if (faixaVal.at(0) == "<")
-        {
-            meuInteiro = stoi(faixaVal.at(1));
-            if (meuInteiro < 400)
-            {
-                // TODO: checar se precisar fazer coerção na memória
-                coercao = true;
-                cout << "\033[1;31m" << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor" << "\033[0m" << "\n";
-            }
         }
-        else if (faixaVal.at(0) == "<=")
-        {
-            meuInteiro = stoi(faixaVal.at(1));
-            if (meuInteiro < 410)
-            {
-                // TODO: checar se precisar fazer coerção a nível de memória
-                coercao = true;
-                cout << "\033[1;31m" << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor" << "\033[0m" << "\n";
-            }
-        }
-        else
-        {
-            meuInteiro = stoi(faixaVal.at(1));
-            if (meuInteiro < 400)
-            {
-                // TODO: checar se precisar fazer coerção na memória
-                coercao = true;
-                cout << "\033[1;31m" << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor" << "\033[0m" << "\n";
-            }
-        }
-    }
     catch (const invalid_argument &e)
     {
         cout << "Erro de argumento inválido: " << e.what();
@@ -290,7 +264,10 @@ void Semantic::CoercaoPropriedades()
 
             if (valueInt < 0)
             {
-                cout << "\033[1;31m" << "Valor negativo \"" << value.at(i) << "\" não permitido" << "\033[0m" << "\n";
+                cout << "\033[1;31m"
+                     << "Valor negativo \"" << value.at(i) << "\" não permitido"
+                     << "\033[0m"
+                     << "\n";
             }
         }
         catch (const exception &e)
@@ -315,55 +292,56 @@ void Semantic::DataType()
             {
                 string value = par.second[i];
 
-                if(value.find("xsd:") != string::npos && first)
+                if (value.find("xsd:") != string::npos && first)
                 {
                     first = false;
                     firstType = 1;
                 }
-                else if(isupper(value[0]) && isalpha(value.back()) && first)
+                else if (isupper(value[0]) && isalpha(value.back()) && first)
                 {
                     first = false;
                     firstType = 2;
                 }
-                else if(!first)
+                else if (!first)
                 {
-                    switch(firstType)
+                    switch (firstType)
                     {
-                        case 1:
-                            if(isupper(value[0]) && isalpha(value.back()))
-                            {
-                                noErrors = false;
-                            }
+                    case 1:
+                        if (isupper(value[0]) && isalpha(value.back()))
+                        {
+                            noErrors = false;
+                        }
                         break;
 
-                        case 2:
-                            if(value.find("xsd:") != string::npos)
-                            {
-                                noErrors = false;
-                            }
+                    case 2:
+                        if (value.find("xsd:") != string::npos)
+                        {
+                            noErrors = false;
+                        }
                         break;
                     }
                 }
             }
 
-            if(noErrors)
+            if (noErrors)
             {
-                switch(firstType)
+                switch (firstType)
                 {
-                    case 1:
-                        cout << "Property Type: \"" << par.first << "\" é do tipo data property\n";
+                case 1:
+                    cout << "Property Type: \"" << par.first << "\" é do tipo data property\n";
                     break;
 
-                    case 2:
-                        cout << "Property Type: \"" << par.first << "\" é do tipo object property\n";
+                case 2:
+                    cout << "Property Type: \"" << par.first << "\" é do tipo object property\n";
                     break;
                 }
             }
             else
             {
-                cout << "\033[1;31m" << "Error: \"" << par.first << "\" está com mais de uma definição de tipos\n" << "\033[0m";
+                cout << "\033[1;31m"
+                     << "Error: \"" << par.first << "\" está com mais de uma definição de tipos\n"
+                     << "\033[0m";
             }
-
         }
     }
 }
@@ -373,11 +351,20 @@ void Semantic::Error(int type)
     switch (type)
     {
     case 0:
-        cout << "\033[1;31m" << "Inicializador de Classe não encontrado" << "\033[0m" << "\n";
+        cout << "\033[1;31m"
+             << "Inicializador de Classe não encontrado"
+             << "\033[0m"
+             << "\n";
     case 1:
-        cout << "\033[1;31m" << "Erro de precedência: EquivalentTo aparecendo após SubClassOf" << "\033[0m" << "\n";
+        cout << "\033[1;31m"
+             << "Erro de precedência: EquivalentTo aparecendo após SubClassOf"
+             << "\033[0m"
+             << "\n";
     case 404:
-        cout << "\033[1;31m" << "Erro de precedência" << "\033[0m" << "\n";
+        cout << "\033[1;31m"
+             << "Erro de precedência"
+             << "\033[0m"
+             << "\n";
     }
     DeleteSelf();
 }

@@ -10,6 +10,7 @@ using namespace std;
 
 string className = "";
 string key = "";
+string tipo = "";
 int isClass = 0;
 extern char * yytext;
 vector<string> valueString;
@@ -40,31 +41,31 @@ classes: classPri classes
 
 
 // Classe Primitiva
-classPri: class subClassOf { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; /* Forçando erro */ }
-		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+classPri: class subClassOf { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; /* Forçando erro */ }
+		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 	 	;
 
 // Classe Definida/Aninhada
-classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-			| class equivalentTo { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+			| class equivalentTo { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 			;
 
 // Classe com Axioma Fechado
-classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf_Axi disjointClasses individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf_Axi disjointClasses { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf_Axi individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf_Axi disjointClasses individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf_Axi disjointClasses { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+		| class subClassOf_Axi individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 		;
 	
 // Classe Enumerada
-classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 		 ;
 
 // Classe Coberta
-classCober: class equivalentToCober { semantic = new Semantic(token, image, 0, faixa, valueString, className); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+classCober: class equivalentToCober { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
 		  ;
 
 // Define uma Class: Pizza
@@ -206,7 +207,7 @@ relop: RELOP { faixa.push_back(yytext); }
 num_proprie: NUM { valueString.push_back(yytext); }
 		   ;
 
-data_type: DATA_TYPE { image[key].push_back(yytext); }
+data_type: DATA_TYPE { image[key].push_back(yytext); tipo = yytext;}
 		 ;
 %%
 

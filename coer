@@ -1,12 +1,8 @@
-Class: CertificationAct
-
-        
-    EquivalentTo: 
-        Relator
-         and (historicallyDependsOn only EvaluationReport)
-         and (mediates only (Certificate or CertificationBody or Evaluated))
-         and (mediates min 1 Certificate)
-         and (mediates min 1 CertificationBody)
-         and (mediates min -1 Evaluated)
-         and (historicallyDependsOn min -1 Certification)
-         and (historicallyDependsOn exactly 1 EvaluationReport)
+Class: HighCaloriePizza
+EquivalentTo:
+Pizza
+and (hasCaloricContent some xsd:integer[>= 400])
+Class: LowCaloriePizza
+EquivalentTo:
+Pizza
+and (hasCaloricContent some xsd:integer[< 200])

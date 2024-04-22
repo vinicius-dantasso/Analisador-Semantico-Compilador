@@ -25,6 +25,7 @@ public:
     int precedencia;
     int procedencia;
     static int instance;
+    string type_coercao;
     vector<string> valueString;
     vector<string> value;
     string className;
@@ -32,16 +33,15 @@ public:
     vector<int> lines;
     vector<string> faixa;
     vector<string> faixaVal;
-    unordered_map<string, vector<string> > table;
+    unordered_map<string, vector<string>> table;
 
     Semantic(
-            vector<int> vec,
-            unordered_map<string, vector<string>> tab,
-            int tp,
-            vector<string> faixa,
-            vector<string> valueString,
-            string classNa
-        );
+        vector<int> vec,
+        unordered_map<string, vector<string>> tab,
+        int tp,
+        vector<string> faixa,
+        vector<string> valueString,
+        string classNa, string type_coercao);
 
     void VerifySemantic();
     void EquivalentSemantic();
