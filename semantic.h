@@ -52,4 +52,5 @@ public:
     void DeleteSelf();
     void Coercao();
     void CoercaoPropriedades();
+    void DataType();
 };

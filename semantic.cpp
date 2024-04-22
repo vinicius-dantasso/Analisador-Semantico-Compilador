@@ -75,29 +75,7 @@ void Semantic::EquivalentSemantic()
 
     cout << "EquivalentTo:\n";
 
-    for (const auto &par : table)
-    {
-        int size = par.second.size();
-        int canShowMessage = 0;
-        if (par.first != "")
-        {
-            for (int i = 0; i < size; i++)
-            {
-                if (par.second[i].find("xsd:") != string::npos && canShowMessage == 0)
-                {
-                    canShowMessage = 1;
-                    cout << "Property Type: \"" << par.first << "\" é do tipo data property"
-                         << "\n";
-                }
-                else if (isupper(par.second[i][0]) && isalpha(par.second[i].back()) && canShowMessage == 0)
-                {
-                    canShowMessage = 1;
-                    cout << "Property Type: \"" << par.first << "\" é do tipo object property"
-                         << "\n";
-                }
-            }
-        }
-    }
+    DataType();
 
     if (!faixaVal.empty())
         Coercao();
@@ -142,31 +120,7 @@ void Semantic::SubclassSemantic()
 
     cout << "SubClassOf:\n";
 
-    for (const auto &par : table)
-    {
-        // cout << "Key -> " << par.first << "\n";
-        int size = par.second.size();
-        int canShowMessage = 0;
-        if (par.first != "")
-        {
-            for (int i = 0; i < size; i++)
-            {
-                // cout << "Value -> " << par.second[i] << "\n";
-                if (par.second[i].find("xsd:") != string::npos && canShowMessage == 0)
-                {
-                    canShowMessage = 1;
-                    cout << "Property Type: \"" << par.first << "\" é do tipo data property"
-                         << "\n";
-                }
-                else if (isupper(par.second[i][0]) && isalpha(par.second[i].back()) && canShowMessage == 0)
-                {
-                    canShowMessage = 1;
-                    cout << "Property Type: \"" << par.first << "\" é do tipo object property"
-                         << "\n";
-                }
-            }
-        }
-    }
+    DataType();
 
     if (value.size() != 0)
         CoercaoPropriedades();
@@ -272,9 +226,6 @@ void Semantic::Coercao()
     bool coercao = false;
     int meuInteiro;
 
-    // TODO: Lógica para classe aninhada
-    // Deve reconhecer erros em todas as linhas
-
     try
     {
         if (faixaVal.at(0) == ">")
@@ -345,6 +296,74 @@ void Semantic::CoercaoPropriedades()
         catch (const exception &e)
         {
             cerr << e.what() << '\n';
+        }
+    }
+}
+
+void Semantic::DataType()
+{
+    bool noErrors = true;
+    int firstType = 0;
+    for (const auto &par : table)
+    {
+        int size = par.second.size();
+        bool first = true;
+
+        if (par.first != "")
+        {
+            for (int i = 0; i < size; i++)
+            {
+                string value = par.second[i];
+
+                if(value.find("xsd:") != string::npos && first)
+                {
+                    first = false;
+                    firstType = 1;
+                }
+                else if(isupper(value[0]) && isalpha(value.back()) && first)
+                {
+                    first = false;
+                    firstType = 2;
+                }
+                else if(!first)
+                {
+                    switch(firstType)
+                    {
+                        case 1:
+                            if(isupper(value[0]) && isalpha(value.back()))
+                            {
+                                noErrors = false;
+                            }
+                        break;
+
+                        case 2:
+                            if(value.find("xsd:") != string::npos)
+                            {
+                                noErrors = false;
+                            }
+                        break;
+                    }
+                }
+            }
+
+            if(noErrors)
+            {
+                switch(firstType)
+                {
+                    case 1:
+                        cout << "Property Type: \"" << par.first << "\" é do tipo data property\n";
+                    break;
+
+                    case 2:
+                        cout << "Property Type: \"" << par.first << "\" é do tipo object property\n";
+                    break;
+                }
+            }
+            else
+            {
+                cout << "\033[1;31m" << "Error: \"" << par.first << "\" está com mais de uma definição de tipos\n" << "\033[0m";
+            }
+
         }
     }
 }
