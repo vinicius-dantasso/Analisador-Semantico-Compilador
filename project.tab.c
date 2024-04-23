@@ -94,8 +94,9 @@ Semantic * semantic;
 int yylex(void);
 int yyparse(void);
 void yyerror(const char *);
+void ResetVariables();
 
-#line 99 "project.tab.c"
+#line 100 "project.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -500,16 +501,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  10
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   267
+#define YYLAST   273
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  17
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  33
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  92
+#define YYNRULES  94
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  217
+#define YYNSTATES  222
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   271
@@ -560,16 +561,16 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    34,    34,    35,    36,    37,    38,    39,    44,    45,
-      46,    47,    48,    52,    53,    57,    58,    59,    60,    64,
-      68,    72,    80,    81,    85,    86,    87,    88,    89,    90,
-      91,    92,    93,    94,    95,    96,    97,    98,    99,   100,
-     101,   103,   104,   107,   108,   109,   113,   117,   118,   119,
-     123,   124,   127,   128,   129,   130,   133,   134,   135,   136,
-     137,   138,   139,   142,   143,   144,   145,   146,   147,   148,
-     149,   150,   154,   158,   159,   163,   167,   168,   172,   176,
-     177,   181,   185,   186,   190,   191,   192,   195,   198,   201,
-     204,   207,   210
+       0,    35,    35,    36,    37,    38,    39,    40,    45,    46,
+      47,    48,    49,    53,    54,    58,    59,    60,    61,    65,
+      69,    70,    71,    75,    83,    84,    88,    89,    90,    91,
+      92,    93,    94,    95,    96,    97,    98,    99,   100,   101,
+     102,   103,   104,   106,   107,   110,   111,   112,   116,   120,
+     121,   122,   126,   127,   130,   131,   132,   133,   136,   137,
+     138,   139,   140,   141,   142,   145,   146,   147,   148,   149,
+     150,   151,   152,   153,   157,   161,   162,   166,   170,   171,
+     175,   179,   180,   184,   188,   189,   193,   194,   195,   198,
+     201,   204,   207,   210,   213
 };
 #endif
 
@@ -606,7 +607,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-119)
+#define YYPACT_NINF (-124)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -620,28 +621,29 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      16,    31,    41,    16,    16,    16,    16,    16,   111,  -119,
-    -119,  -119,  -119,  -119,  -119,  -119,    52,   176,    68,    68,
-      40,   104,  -119,  -119,  -119,    53,  -119,    76,    62,  -119,
-    -119,  -119,  -119,  -119,     5,    34,    86,    85,    40,    97,
-      40,  -119,  -119,   110,   127,  -119,  -119,    23,   112,   132,
-    -119,  -119,   198,    -3,    76,   182,    56,  -119,     5,   161,
-    -119,   135,  -119,   137,  -119,  -119,  -119,    76,   139,    76,
-      76,    76,  -119,   210,   145,    53,   215,  -119,    76,   156,
-      49,   110,   124,   158,   160,    -3,  -119,   176,   176,     5,
-      13,    56,   163,   164,   166,    74,   110,   110,  -119,    -3,
-      76,  -119,   170,  -119,    -3,    76,  -119,   175,   110,   177,
-     181,   110,   184,   176,   176,    76,  -119,  -119,    13,   185,
-    -119,  -119,    -3,    76,  -119,   189,   200,    79,  -119,   193,
-      76,   175,  -119,   194,   203,   176,  -119,   176,   176,  -119,
-    -119,    34,  -119,    89,   211,   176,    76,  -119,   220,   194,
-       3,    76,   110,   223,  -119,   110,   224,   176,  -119,  -119,
-    -119,   110,   225,   176,   175,    76,   226,   127,   228,   110,
-    -119,    76,  -119,   229,  -119,  -119,   230,    93,  -119,   110,
-    -119,    76,   231,    76,    96,   233,  -119,  -119,   126,  -119,
-     234,   235,  -119,   236,   110,    76,  -119,    76,  -119,   237,
-      -3,  -119,  -119,    76,   238,  -119,  -119,    -3,  -119,    76,
-    -119,   239,    76,   110,    76,   240,  -119
+      -2,    10,    60,    -2,    -2,    -2,    -2,    -2,   130,  -124,
+    -124,  -124,  -124,  -124,  -124,  -124,   134,    34,   179,   145,
+      53,    62,    75,  -124,  -124,    78,  -124,    81,    88,  -124,
+    -124,  -124,  -124,  -124,     8,     4,   100,   111,   116,  -124,
+      53,   138,    53,  -124,  -124,   100,    37,  -124,  -124,    28,
+     143,    34,  -124,   153,  -124,  -124,   229,    11,    81,   107,
+     159,  -124,     8,   223,    81,  -124,   164,  -124,   173,  -124,
+    -124,  -124,    81,   175,    81,    81,  -124,   146,   183,   223,
+      78,   184,  -124,    81,   197,    32,   100,   136,   190,   192,
+      11,  -124,    34,    34,     8,    97,   159,   100,   201,   140,
+     196,    54,   100,  -124,    11,    81,  -124,   198,  -124,    11,
+      81,  -124,   200,   100,   207,   208,   100,   210,    34,    34,
+      81,  -124,  -124,    97,   213,  -124,  -124,    11,    81,  -124,
+     214,   205,    63,  -124,   218,    81,   200,  -124,   215,   219,
+      34,  -124,    34,    34,  -124,  -124,     4,  -124,    84,   221,
+      34,    81,  -124,   234,   215,   118,    81,   100,   235,  -124,
+     100,   236,    34,  -124,  -124,  -124,   100,   237,    34,   200,
+      81,   238,    37,   239,   100,  -124,    81,  -124,   240,  -124,
+    -124,   241,    74,  -124,   100,  -124,    81,   242,    81,    95,
+     243,  -124,  -124,   131,  -124,   244,   245,  -124,   246,   100,
+      81,  -124,    81,  -124,   247,    11,  -124,  -124,    81,   248,
+    -124,  -124,    11,  -124,    81,  -124,   249,    81,   100,    81,
+     250,  -124
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -649,46 +651,47 @@ static const yytype_int16 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       7,     0,     0,     7,     7,     7,     7,     7,     0,    21,
+       7,     0,     0,     7,     7,     7,     7,     7,     0,    23,
        1,     2,     3,     4,     5,     6,     0,     0,     8,    15,
-      14,    62,    20,    19,    88,     0,    72,    74,     0,    85,
-      84,    86,    22,    46,     0,    23,     0,     0,     9,    10,
-      17,    18,    13,     0,     0,    92,    51,    71,     0,     0,
-      75,    87,     0,     0,     0,     0,     0,    37,     0,     0,
-      80,    78,    83,    81,    12,    11,    16,     0,     0,     0,
-      74,    71,    59,     0,     0,    77,     0,    73,     0,     0,
-       0,     0,     0,    31,    35,     0,    36,     0,     0,     0,
-       0,     0,     0,     0,     0,    71,     0,     0,    60,     0,
-       0,    90,     0,    76,     0,     0,    54,     0,     0,    33,
-       0,     0,    27,     0,     0,     0,    39,    38,     0,    31,
-      79,    82,     0,    71,    58,     0,     0,     0,    89,     0,
-       0,    52,    91,     0,    29,     0,    49,     0,     0,    24,
-      48,     0,    25,     0,    31,     0,     0,    57,     0,    87,
-       0,    71,     0,     0,    53,     0,     0,     0,    34,    26,
-      28,     0,     0,     0,     0,    71,     0,     0,     0,     0,
-      68,    71,    50,     0,    40,    30,     0,    43,    47,     0,
-      56,    71,     0,     0,    71,     0,    69,    55,     0,    44,
-       0,     0,    70,     0,     0,    71,    66,    71,    41,     0,
-       0,    45,    61,    71,     0,    67,    65,     0,    42,     0,
-      64,     0,     0,     0,    71,     0,    63
+      14,    64,    20,    19,    90,     0,    74,    76,     0,    87,
+      86,    88,    24,    48,     0,    25,     0,     0,     0,    22,
+       9,    10,    17,    18,    13,     0,     0,    94,    53,    73,
+       0,     0,    21,     0,    77,    89,     0,     0,     0,     0,
+       0,    39,     0,     0,    76,    82,    80,    85,    83,    12,
+      11,    16,     0,     0,     0,    73,    61,     0,     0,    25,
+      79,     0,    75,     0,     0,     0,     0,     0,    33,    37,
+       0,    38,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,    73,     0,    62,     0,     0,    92,     0,    78,     0,
+       0,    56,     0,     0,    35,     0,     0,    29,     0,     0,
+       0,    41,    40,     0,    33,    81,    84,     0,    73,    60,
+       0,     0,     0,    91,     0,     0,    54,    93,     0,    31,
+       0,    51,     0,     0,    26,    50,     0,    27,     0,    33,
+       0,     0,    59,     0,    89,     0,    73,     0,     0,    55,
+       0,     0,     0,    36,    28,    30,     0,     0,     0,     0,
+      73,     0,     0,     0,     0,    70,    73,    52,     0,    42,
+      32,     0,    45,    49,     0,    58,    73,     0,     0,    73,
+       0,    71,    57,     0,    46,     0,     0,    72,     0,     0,
+      73,    68,    73,    43,     0,     0,    47,    63,    73,     0,
+      69,    67,     0,    44,     0,    66,     0,     0,     0,    73,
+       0,    65
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -119,   213,  -119,  -119,  -119,  -119,  -119,  -119,  -119,    70,
-      54,    61,  -119,  -109,  -119,  -119,  -119,   -65,  -119,   -13,
-    -119,   179,   -17,  -119,     4,  -119,    -1,    55,   -16,  -119,
-    -119,  -118,    19
+    -124,   174,  -124,  -124,  -124,  -124,  -124,  -124,   251,    73,
+      57,    68,  -124,  -114,  -124,  -124,  -124,    20,   252,   -44,
+    -124,   185,   -13,  -124,    72,  -124,    -1,     0,   -16,  -124,
+    -124,  -123,   -11
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_uint8 yydefgoto[] =
 {
-       0,     2,     3,     4,     5,     6,     7,     8,    18,    57,
-      87,    88,    19,    33,    20,    21,    46,    72,    22,    77,
-      23,    50,    38,    61,    39,    63,    58,    73,    59,   129,
-     102,   133,    84
+       0,     2,     3,     4,     5,     6,     7,     8,    18,    61,
+      92,    93,    19,    33,    20,    21,    48,    76,    22,    26,
+      23,    54,    40,    66,    41,    68,    62,    77,    63,   134,
+     107,   138,    89
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -696,64 +699,66 @@ static const yytype_uint8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      27,    35,    40,    26,   140,    47,    98,    24,    51,   152,
-      29,    30,    31,   155,   167,   132,    34,    24,    29,    30,
-      31,     1,    65,    41,    42,    82,    51,    67,    70,    45,
-     124,    68,   169,    54,    71,     9,    70,    28,    24,    83,
-      48,    10,    64,    69,    66,    56,   179,    29,    30,    31,
-      37,    78,    79,    24,   178,    89,    24,    54,   147,    28,
-      24,   108,    49,    25,   109,    70,   112,    85,   110,    29,
-      30,    31,   100,    53,   119,   105,    36,    51,    37,    51,
-     125,    70,    52,    24,   115,   123,   170,    32,    54,    55,
-      60,   132,   134,    24,    62,   137,    51,   141,   126,    51,
-     180,   161,   144,   130,   189,    36,   186,   195,    24,    80,
-      43,   151,    34,    90,    24,    44,   192,    16,    17,   196,
-      45,   146,    94,    74,    96,    97,    86,   162,    24,    51,
-     205,    24,   206,   106,   168,   111,   171,   198,   210,   173,
-      29,    30,    31,    75,   118,   176,    92,   141,    93,   216,
-      95,    70,   156,   185,   182,   127,   101,   116,   117,   107,
-     131,    86,    34,   191,    28,    24,   183,   120,   166,   113,
-     143,   114,    91,   121,    29,    30,    31,   122,   204,    28,
-      24,   150,   128,   139,   142,   154,    24,   132,   135,    29,
-      30,    31,   136,    81,    82,   138,   145,   162,    45,   209,
-     148,   164,    24,   149,   153,   158,   212,   159,   160,    76,
-      45,    29,    30,    31,   157,   139,    11,    12,    13,    14,
-      15,    99,   163,    29,    30,    31,   104,   175,    29,    30,
-      31,   165,   190,   139,   172,   174,   177,   181,   194,   184,
-     187,   188,   193,   199,   197,   200,   202,   203,   207,   211,
-     214,   201,   161,   208,   103,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,   213,     0,     0,   215
+      27,    35,    73,     1,   145,    49,    42,    28,    24,   157,
+      50,    55,    82,   160,     9,    60,    34,    29,    30,    31,
+      64,    29,    30,    31,    29,    30,    31,    56,    70,    72,
+      64,    55,   174,    58,    59,    79,    24,    28,    24,    75,
+      64,    24,   115,    88,   113,    74,   184,    29,    30,    31,
+      29,    30,    31,    82,   183,    83,    84,    55,    85,    94,
+      10,    58,    95,    38,    97,   128,    24,    24,    45,   114,
+      64,   117,   100,    46,   102,   137,   105,    55,    47,   124,
+     110,    64,    51,   111,    55,   194,   130,    53,    24,   120,
+      32,    43,    44,    58,   123,   103,   166,   139,    55,    57,
+     142,    24,   146,   131,    24,   132,   200,   149,   135,    87,
+     136,    24,    69,    47,    71,    65,   156,    34,    86,    87,
+     148,   129,    24,    47,    32,    67,   151,   161,   187,   172,
+     137,   155,   167,    91,    55,   159,    16,    17,    24,   173,
+      24,   176,   203,   171,   178,    25,    37,   116,   152,   126,
+     181,   169,   146,    37,    78,    38,    64,   104,   190,    29,
+      30,    31,    28,    24,    80,   121,   122,    34,   196,    91,
+      90,   188,    29,    30,    31,    98,   175,    11,    12,    13,
+      14,    15,   195,   209,    99,    36,   101,    37,   199,    38,
+     185,   144,   147,   204,   106,   109,   191,    29,    30,    31,
+     112,   118,   167,   119,   214,   125,   197,   127,   154,   201,
+     133,   217,   137,   163,   218,   164,   165,   220,   140,   141,
+     210,   143,   211,   144,   150,   153,    28,    24,   215,   158,
+     162,    47,   168,    24,    96,   180,    29,    30,    31,   221,
+      81,   144,    29,    30,    31,   170,   177,   179,   182,   186,
+     189,   192,   193,   198,   202,   205,   207,   208,   212,   216,
+     219,   213,   166,   206,     0,   108,     0,     0,     0,     0,
+      39,     0,     0,    52
 };
 
 static const yytype_int16 yycheck[] =
 {
-      16,    17,    19,    16,   113,    21,    71,     4,     3,   127,
-      13,    14,    15,   131,    11,    12,    17,     4,    13,    14,
-      15,     5,    39,    19,    20,    12,     3,    43,    44,    16,
-      95,    44,   150,    34,    11,     4,    52,     3,     4,    55,
-      21,     0,    38,    44,    40,    11,   164,    13,    14,    15,
-      10,    52,    53,     4,   163,    56,     4,    58,   123,     3,
-       4,    12,     9,    11,    80,    81,    82,    11,    81,    13,
-      14,    15,    73,    11,    90,    76,     8,     3,    10,     3,
-      96,    97,    27,     4,    85,    11,   151,    17,    89,    34,
-       4,    12,   108,     4,     9,   111,     3,   113,    99,     3,
-     165,    12,   118,   104,    11,     8,   171,    11,     4,    54,
-       6,   127,   113,    58,     4,    11,   181,     6,     7,   184,
-      16,   122,    67,    11,    69,    70,    56,   143,     4,     3,
-     195,     4,   197,    78,   150,    11,   152,    11,   203,   155,
-      13,    14,    15,    11,    89,   161,    11,   163,    11,   214,
-      11,   167,   133,   169,   167,   100,    11,    87,    88,     3,
-     105,    91,   163,   179,     3,     4,   167,     4,   149,    11,
-     115,    11,    11,     9,    13,    14,    15,    11,   194,     3,
-       4,   126,    12,   113,   114,   130,     4,    12,    11,    13,
-      14,    15,    11,    11,    12,    11,    11,   213,    16,   200,
-      11,   146,     4,     3,    11,   135,   207,   137,   138,    11,
-      16,    13,    14,    15,    11,   145,     3,     4,     5,     6,
-       7,    11,    11,    13,    14,    15,    11,   157,    13,    14,
-      15,    11,   177,   163,    11,    11,    11,    11,   183,    11,
-      11,    11,    11,   188,    11,    11,    11,    11,    11,    11,
-      11,   190,    12,   199,    75,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,   209,    -1,    -1,   212
+      16,    17,    46,     5,   118,    21,    19,     3,     4,   132,
+      21,     3,    56,   136,     4,    11,    17,    13,    14,    15,
+      36,    13,    14,    15,    13,    14,    15,    27,    41,    45,
+      46,     3,   155,    34,    34,    51,     4,     3,     4,    11,
+      56,     4,    86,    59,    12,    46,   169,    13,    14,    15,
+      13,    14,    15,    97,   168,    56,    57,     3,    58,    60,
+       0,    62,    62,    10,    64,    11,     4,     4,     6,    85,
+      86,    87,    72,    11,    74,    12,    77,     3,    16,    95,
+      81,    97,     7,    83,     3,    11,   102,     9,     4,    90,
+      17,    19,    20,    94,    94,    75,    12,   113,     3,    11,
+     116,     4,   118,   104,     4,   105,    11,   123,   109,    12,
+     110,     4,    40,    16,    42,     4,   132,   118,    11,    12,
+     120,   101,     4,    16,    51,     9,   127,   138,   172,    11,
+      12,   131,   148,    60,     3,   135,     6,     7,     4,   155,
+       4,   157,    11,   154,   160,    11,     8,    11,   128,     9,
+     166,   151,   168,     8,    11,    10,   172,    11,   174,    13,
+      14,    15,     3,     4,    11,    92,    93,   168,   184,    96,
+      11,   172,    13,    14,    15,    11,   156,     3,     4,     5,
+       6,     7,   182,   199,    11,     6,    11,     8,   188,    10,
+     170,   118,   119,   193,    11,    11,   176,    13,    14,    15,
+       3,    11,   218,    11,   205,     4,   186,    11,     3,   189,
+      12,   212,    12,   140,   214,   142,   143,   217,    11,    11,
+     200,    11,   202,   150,    11,    11,     3,     4,   208,    11,
+      11,    16,    11,     4,    11,   162,    13,    14,    15,   219,
+      11,   168,    13,    14,    15,    11,    11,    11,    11,    11,
+      11,    11,    11,    11,    11,    11,    11,    11,    11,    11,
+      11,   204,    12,   195,    -1,    80,    -1,    -1,    -1,    -1,
+      18,    -1,    -1,    22
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -763,25 +768,26 @@ static const yytype_int8 yystos[] =
        0,     5,    18,    19,    20,    21,    22,    23,    24,     4,
        0,    18,    18,    18,    18,    18,     6,     7,    25,    29,
       31,    32,    35,    37,     4,    11,    36,    45,     3,    13,
-      14,    15,    26,    30,    43,    45,     8,    10,    39,    41,
-      39,    41,    41,     6,    11,    16,    33,    45,    49,     9,
-      38,     3,    44,    11,    43,    44,    11,    26,    43,    45,
-       4,    40,     9,    42,    41,    39,    41,    45,    36,    43,
-      45,    11,    34,    44,    11,    11,    11,    36,    43,    43,
-      44,    11,    12,    45,    49,    11,    26,    27,    28,    43,
-      44,    11,    11,    11,    44,    11,    44,    44,    34,    11,
-      43,    11,    47,    38,    11,    43,    44,     3,    12,    45,
-      36,    11,    45,    11,    11,    43,    26,    26,    44,    45,
-       4,     9,    11,    11,    34,    45,    43,    44,    12,    46,
-      43,    44,    12,    48,    45,    11,    11,    45,    11,    26,
-      30,    45,    26,    44,    45,    11,    43,    34,    11,     3,
-      44,    45,    48,    11,    44,    48,    49,    11,    26,    26,
-      26,    12,    45,    11,    44,    11,    49,    11,    45,    48,
-      34,    45,    11,    45,    11,    26,    45,    11,    30,    48,
-      34,    11,    36,    43,    11,    45,    34,    11,    11,    11,
-      44,    45,    34,    11,    44,    11,    34,    11,    11,    44,
-      11,    28,    11,    11,    45,    34,    34,    11,    27,    43,
-      34,    11,    43,    44,    11,    44,    34
+      14,    15,    26,    30,    43,    45,     6,     8,    10,    35,
+      39,    41,    39,    41,    41,     6,    11,    16,    33,    45,
+      49,     7,    25,     9,    38,     3,    44,    11,    43,    44,
+      11,    26,    43,    45,    45,     4,    40,     9,    42,    41,
+      39,    41,    45,    36,    43,    11,    34,    44,    11,    45,
+      11,    11,    36,    43,    43,    44,    11,    12,    45,    49,
+      11,    26,    27,    28,    43,    44,    11,    44,    11,    11,
+      44,    11,    44,    34,    11,    43,    11,    47,    38,    11,
+      43,    44,     3,    12,    45,    36,    11,    45,    11,    11,
+      43,    26,    26,    44,    45,     4,     9,    11,    11,    34,
+      45,    43,    44,    12,    46,    43,    44,    12,    48,    45,
+      11,    11,    45,    11,    26,    30,    45,    26,    44,    45,
+      11,    43,    34,    11,     3,    44,    45,    48,    11,    44,
+      48,    49,    11,    26,    26,    26,    12,    45,    11,    44,
+      11,    49,    11,    45,    48,    34,    45,    11,    45,    11,
+      26,    45,    11,    30,    48,    34,    11,    36,    43,    11,
+      45,    34,    11,    11,    11,    44,    45,    34,    11,    44,
+      11,    34,    11,    11,    44,    11,    28,    11,    11,    45,
+      34,    34,    11,    27,    43,    34,    11,    43,    44,    11,
+      44,    34
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -789,14 +795,14 @@ static const yytype_int8 yyr1[] =
 {
        0,    17,    18,    18,    18,    18,    18,    18,    19,    19,
       19,    19,    19,    20,    20,    21,    21,    21,    21,    22,
-      23,    24,    25,    25,    26,    26,    26,    26,    26,    26,
+      23,    23,    23,    24,    25,    25,    26,    26,    26,    26,
       26,    26,    26,    26,    26,    26,    26,    26,    26,    26,
-      26,    27,    27,    28,    28,    28,    29,    30,    30,    30,
-      31,    31,    32,    32,    32,    32,    33,    33,    33,    33,
-      33,    33,    33,    34,    34,    34,    34,    34,    34,    34,
-      34,    34,    35,    36,    36,    37,    38,    38,    39,    40,
-      40,    41,    42,    42,    43,    43,    43,    44,    45,    46,
-      47,    48,    49
+      26,    26,    26,    27,    27,    28,    28,    28,    29,    30,
+      30,    30,    31,    31,    32,    32,    32,    32,    33,    33,
+      33,    33,    33,    33,    33,    34,    34,    34,    34,    34,
+      34,    34,    34,    34,    35,    36,    36,    37,    38,    38,
+      39,    40,    40,    41,    42,    42,    43,    43,    43,    44,
+      45,    46,    47,    48,    49
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -804,14 +810,14 @@ static const yytype_int8 yyr2[] =
 {
        0,     2,     2,     2,     2,     2,     2,     0,     2,     3,
        3,     4,     4,     3,     2,     2,     4,     3,     3,     2,
-       2,     2,     2,     2,     5,     5,     6,     4,     6,     5,
-       7,     3,     5,     4,     6,     3,     3,     2,     4,     4,
-       7,     7,     8,     5,     6,     7,     2,     7,     5,     5,
-       7,     2,     6,     7,     5,     9,     7,     5,     4,     2,
-       3,     9,     0,    11,     9,     8,     7,     8,     5,     6,
-       7,     0,     2,     3,     1,     3,     3,     2,     2,     3,
-       1,     2,     3,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1
+       2,     3,     3,     2,     2,     2,     5,     5,     6,     4,
+       6,     5,     7,     3,     5,     4,     6,     3,     3,     2,
+       4,     4,     7,     7,     8,     5,     6,     7,     2,     7,
+       5,     5,     7,     2,     6,     7,     5,     9,     7,     5,
+       4,     2,     3,     9,     0,    11,     9,     8,     7,     8,
+       5,     6,     7,     0,     2,     3,     1,     3,     3,     2,
+       2,     3,     1,     2,     3,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1
 };
 
 
@@ -1275,191 +1281,215 @@ yyreduce:
   switch (yyn)
     {
   case 8: /* classPri: class subClassOf  */
-#line 44 "project.y"
-                           { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-#line 1281 "project.tab.c"
-    break;
-
-  case 9: /* classPri: class subClassOf disjointClasses  */
 #line 45 "project.y"
-                                                   { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+                           { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 #line 1287 "project.tab.c"
     break;
 
-  case 10: /* classPri: class subClassOf individuals  */
+  case 9: /* classPri: class subClassOf disjointClasses  */
 #line 46 "project.y"
-                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+                                                   { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 #line 1293 "project.tab.c"
     break;
 
-  case 11: /* classPri: class subClassOf individuals disjointClasses  */
+  case 10: /* classPri: class subClassOf individuals  */
 #line 47 "project.y"
-                                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; /* Forçando erro */ }
+                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 #line 1299 "project.tab.c"
     break;
 
-  case 12: /* classPri: class subClassOf disjointClasses individuals  */
+  case 11: /* classPri: class subClassOf individuals disjointClasses  */
 #line 48 "project.y"
-                                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+                                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); /* Forçando erro */ }
 #line 1305 "project.tab.c"
     break;
 
-  case 13: /* classDefAnin: class equivalentTo individuals  */
-#line 52 "project.y"
-                                             { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+  case 12: /* classPri: class subClassOf disjointClasses individuals  */
+#line 49 "project.y"
+                                                               { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 #line 1311 "project.tab.c"
     break;
 
-  case 14: /* classDefAnin: class equivalentTo  */
+  case 13: /* classDefAnin: class equivalentTo individuals  */
 #line 53 "project.y"
-                                             { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+                                             { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 #line 1317 "project.tab.c"
     break;
 
-  case 15: /* classAxi: class subClassOf_Axi  */
-#line 57 "project.y"
-                               { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+  case 14: /* classDefAnin: class equivalentTo  */
+#line 54 "project.y"
+                                             { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 #line 1323 "project.tab.c"
     break;
 
-  case 16: /* classAxi: class subClassOf_Axi disjointClasses individuals  */
+  case 15: /* classAxi: class subClassOf_Axi  */
 #line 58 "project.y"
-                                                                   { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+                               { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 #line 1329 "project.tab.c"
     break;
 
-  case 17: /* classAxi: class subClassOf_Axi disjointClasses  */
+  case 16: /* classAxi: class subClassOf_Axi disjointClasses individuals  */
 #line 59 "project.y"
-                                                       { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+                                                                   { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 #line 1335 "project.tab.c"
     break;
 
-  case 18: /* classAxi: class subClassOf_Axi individuals  */
+  case 17: /* classAxi: class subClassOf_Axi disjointClasses  */
 #line 60 "project.y"
-                                                   { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+                                                       { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 #line 1341 "project.tab.c"
     break;
 
-  case 19: /* classEnum: class equivalentToEnum  */
-#line 64 "project.y"
-                                  { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+  case 18: /* classAxi: class subClassOf_Axi individuals  */
+#line 61 "project.y"
+                                                   { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 #line 1347 "project.tab.c"
     break;
 
-  case 20: /* classCober: class equivalentToCober  */
-#line 68 "project.y"
-                                    { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+  case 19: /* classEnum: class equivalentToEnum  */
+#line 65 "project.y"
+                                  { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 #line 1353 "project.tab.c"
     break;
 
-  case 21: /* class: CLASS IDCLASS  */
-#line 72 "project.y"
+  case 20: /* classCober: class equivalentToCober  */
+#line 69 "project.y"
+                                    { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
+#line 1359 "project.tab.c"
+    break;
+
+  case 21: /* classCober: class equivalentToCober subClassOf  */
+#line 70 "project.y"
+                                                       { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); ResetVariables(); }
+#line 1365 "project.tab.c"
+    break;
+
+  case 22: /* classCober: class subClassOf equivalentToCober  */
+#line 71 "project.y"
+                                                       { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); ResetVariables(); }
+#line 1371 "project.tab.c"
+    break;
+
+  case 23: /* class: CLASS IDCLASS  */
+#line 75 "project.y"
                      { 
 		isClass = 1; 
 		className = yytext;
 		token.push_back(CLASSTOKEN);
  	}
-#line 1363 "project.tab.c"
-    break;
-
-  case 22: /* subClassOf: SUBCLASSOF subClass_list  */
-#line 80 "project.y"
-                                     { token.push_back(SUBCLASSTOKEN); }
-#line 1369 "project.tab.c"
-    break;
-
-  case 23: /* subClassOf: SUBCLASSOF id_class  */
-#line 81 "project.y"
-                                        { token.push_back(SUBCLASSTOKEN); }
-#line 1375 "project.tab.c"
-    break;
-
-  case 46: /* subClassOf_Axi: SUBCLASSOF subClass_AxiList  */
-#line 113 "project.y"
-                                            { token.push_back(SUBCLASSTOKEN); }
 #line 1381 "project.tab.c"
     break;
 
-  case 50: /* equivalentTo: equivalent data_type RELOP relop num RELOP RELOP  */
-#line 123 "project.y"
-                                                               { token.push_back(EQUIVALENTTOKEN); }
+  case 24: /* subClassOf: SUBCLASSOF subClass_list  */
+#line 83 "project.y"
+                                     { token.push_back(SUBCLASSTOKEN); }
 #line 1387 "project.tab.c"
     break;
 
-  case 51: /* equivalentTo: equivalent descAnin  */
-#line 124 "project.y"
-                                              {token.push_back(EQUIVALENTTOKEN); }
+  case 25: /* subClassOf: SUBCLASSOF id_class  */
+#line 84 "project.y"
+                                        { token.push_back(SUBCLASSTOKEN); }
 #line 1393 "project.tab.c"
     break;
 
-  case 78: /* disjointClasses: DISJOINTCLASSES disjointClasses_list  */
-#line 172 "project.y"
-                                                      { token.push_back(DISJOINTTOKEN); }
+  case 48: /* subClassOf_Axi: SUBCLASSOF subClass_AxiList  */
+#line 116 "project.y"
+                                            { token.push_back(SUBCLASSTOKEN); }
 #line 1399 "project.tab.c"
     break;
 
-  case 81: /* individuals: INDIVIDUALS individuals_list  */
-#line 181 "project.y"
-                                          { token.push_back(INDIVIDUALSTOKEN); }
+  case 52: /* equivalentTo: equivalent data_type RELOP relop num RELOP RELOP  */
+#line 126 "project.y"
+                                                               { token.push_back(EQUIVALENTTOKEN); }
 #line 1405 "project.tab.c"
     break;
 
-  case 84: /* propertie: PROPERTIE_HAS  */
-#line 190 "project.y"
-                         { key = yytext; image[key]; }
+  case 53: /* equivalentTo: equivalent descAnin  */
+#line 127 "project.y"
+                                              {token.push_back(EQUIVALENTTOKEN); }
 #line 1411 "project.tab.c"
     break;
 
-  case 85: /* propertie: PROPERTIE_IS  */
-#line 191 "project.y"
-                        { key = yytext; image[key]; }
+  case 74: /* equivalentToCober: EQUIVALENTTO cober_list  */
+#line 157 "project.y"
+                                           { token.push_back(EQUIVALENTTOKEN); }
 #line 1417 "project.tab.c"
     break;
 
-  case 86: /* propertie: PROPERTIE  */
-#line 192 "project.y"
-                     { key = yytext; image[key]; }
+  case 77: /* equivalentToEnum: EQUIVALENTTO RELOP enum_list  */
+#line 166 "project.y"
+                                               { token.push_back(EQUIVALENTTOKEN); }
 #line 1423 "project.tab.c"
     break;
 
-  case 87: /* reserverd_words: RESERVED_WORD  */
-#line 195 "project.y"
-                               { image[key].push_back(yytext); }
+  case 80: /* disjointClasses: DISJOINTCLASSES disjointClasses_list  */
+#line 175 "project.y"
+                                                      { token.push_back(DISJOINTTOKEN); }
 #line 1429 "project.tab.c"
     break;
 
-  case 88: /* id_class: IDCLASS  */
-#line 198 "project.y"
-                  { image[key].push_back(yytext); }
+  case 83: /* individuals: INDIVIDUALS individuals_list  */
+#line 184 "project.y"
+                                          { token.push_back(INDIVIDUALSTOKEN); }
 #line 1435 "project.tab.c"
     break;
 
-  case 89: /* num: NUM  */
-#line 201 "project.y"
-         { faixa.push_back(yytext); }
+  case 86: /* propertie: PROPERTIE_HAS  */
+#line 193 "project.y"
+                         { key = yytext; image[key]; }
 #line 1441 "project.tab.c"
     break;
 
-  case 90: /* relop: RELOP  */
-#line 204 "project.y"
-             { faixa.push_back(yytext); }
+  case 87: /* propertie: PROPERTIE_IS  */
+#line 194 "project.y"
+                        { key = yytext; image[key]; }
 #line 1447 "project.tab.c"
     break;
 
-  case 91: /* num_proprie: NUM  */
-#line 207 "project.y"
-                 { valueString.push_back(yytext); }
+  case 88: /* propertie: PROPERTIE  */
+#line 195 "project.y"
+                     { key = yytext; image[key]; }
 #line 1453 "project.tab.c"
     break;
 
-  case 92: /* data_type: DATA_TYPE  */
-#line 210 "project.y"
-                     { image[key].push_back(yytext); tipo = yytext;}
+  case 89: /* reserverd_words: RESERVED_WORD  */
+#line 198 "project.y"
+                               { image[key].push_back(yytext); }
 #line 1459 "project.tab.c"
     break;
 
+  case 90: /* id_class: IDCLASS  */
+#line 201 "project.y"
+                  { image[key].push_back(yytext); }
+#line 1465 "project.tab.c"
+    break;
 
-#line 1463 "project.tab.c"
+  case 91: /* num: NUM  */
+#line 204 "project.y"
+         { faixa.push_back(yytext); }
+#line 1471 "project.tab.c"
+    break;
+
+  case 92: /* relop: RELOP  */
+#line 207 "project.y"
+             { faixa.push_back(yytext); }
+#line 1477 "project.tab.c"
+    break;
+
+  case 93: /* num_proprie: NUM  */
+#line 210 "project.y"
+                 { valueString.push_back(yytext); }
+#line 1483 "project.tab.c"
+    break;
+
+  case 94: /* data_type: DATA_TYPE  */
+#line 213 "project.y"
+                     { image[key].push_back(yytext); tipo = yytext;}
+#line 1489 "project.tab.c"
+    break;
+
+
+#line 1493 "project.tab.c"
 
       default: break;
     }
@@ -1652,7 +1682,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 212 "project.y"
+#line 215 "project.y"
 
 
 /* definido pelo analisador léxico */
@@ -1688,7 +1718,16 @@ void yyerror(const char * s)
 		/* mensagem de erro exibe o símbolo que causou erro e o número da linha */
     	cout << "\033[1;31m" << "Erro sintático: símbolo \"" << yytext << "\" (linha " << yylineno << ") Na classe " << className << "\033[0m" << "\n\n";
 		isClass = 2;
-		token.clear(); image.clear(); faixa.clear(); vec_proprie.clear();
+		ResetVariables();
 	}
 	yyparse();
+}
+
+void ResetVariables()
+{
+	token.clear();
+	image.clear(); 
+	faixa.clear(); 
+	vec_proprie.clear(); 
+	key = "";
 }

@@ -20,4 +20,4 @@ make
 2. Depois de executar a arquivo make basta rodar o programa com o arquivo específico
 
 ````plaintext
- ./project < ./input
+ ./project < ./test

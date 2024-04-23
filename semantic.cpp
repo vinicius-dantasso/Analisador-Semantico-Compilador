@@ -2,12 +2,14 @@
 
 int Semantic::instance = 1;
 
-Semantic::Semantic(vector<int> vec,
-                   unordered_map<string, vector<string>> tab,
-                   int tp,
-                   vector<string> faixa,
-                   vector<string> valueString,
-                   string classNa, string tipo)
+Semantic::Semantic(
+    vector<int> vec,
+    unordered_map<string, vector<string>> tab,
+    int tp,
+    vector<string> faixa,
+    vector<string> valueString,
+    string classNa, 
+    string tipo)
 {
     type_coercao = tipo;
     nextPos = 1;
@@ -71,6 +73,7 @@ void Semantic::VerifySemantic()
 void Semantic::EquivalentSemantic()
 {
     bool bound = tokens.size() > 2;
+    prec = "EquivalentTo";
     length++;
 
     cout << "EquivalentTo:\n";
@@ -87,24 +90,24 @@ void Semantic::EquivalentSemantic()
 
         switch (tokens[nextPos])
         {
-        case SUBCLASSTOKEN:
-            nextPos++;
-            cout << "======================================================\n\n";
-            SubclassSemantic();
-            break;
+            case SUBCLASSTOKEN:
+                nextPos++;
+                SubclassSemantic();
+                break;
 
-        case DISJOINTTOKEN:
-            nextPos++;
-            DisjointSemantic();
-            break;
+            case DISJOINTTOKEN:
+                nextPos++;
+                DisjointSemantic();
+                break;
 
-        case INDIVIDUALSTOKEN:
-            nextPos++;
-            IndividualSemantic();
-            break;
+            case INDIVIDUALSTOKEN:
+                nextPos++;
+                IndividualSemantic();
+                break;
 
-        default:
-            Error(404); // Caso encontro qualquer outra coisa
+            default:
+                proc = "EquivalentTo";
+                Error(404); // Caso encontro qualquer outra coisa
             break;
         }
     }
@@ -115,6 +118,7 @@ void Semantic::EquivalentSemantic()
 void Semantic::SubclassSemantic()
 {
     bool bound = tokens.size() > 2;
+    prec = "SubClassOf";
     length++;
 
     cout << "SubClassOf:\n";
@@ -157,10 +161,7 @@ void Semantic::SubclassSemantic()
 
         if (defined.size() != called.size())
         {
-            cout << "\033[1;31m"
-                 << "Error: Algo de errado com Axioma de Fechamento"
-                 << "\033[0m"
-                 << "\n";
+            cout << "\033[1;31m" << "Error: Algo de errado com Axioma de Fechamento" << "\033[0m" << "\n";
             table.clear();
         }
 
@@ -182,7 +183,8 @@ void Semantic::SubclassSemantic()
             break;
 
         case EQUIVALENTTOKEN:
-            Error(1); // Equivalent depois de SubClass
+            proc = "EquivalentTo";
+            Error(404); // Equivalent depois de SubClass
             break;
         }
     }
@@ -193,6 +195,7 @@ void Semantic::SubclassSemantic()
 void Semantic::DisjointSemantic()
 {
     bool bound = tokens.size() > 3;
+    prec = "DisjointClass";
     length++;
 
     if (bound)
@@ -216,11 +219,20 @@ void Semantic::DisjointSemantic()
 void Semantic::IndividualSemantic()
 {
     bool bound = nextPos == tokens.size();
+    prec = "Individual";
 
     if (bound)
         DeleteSelf();
     else
+    {
+        switch(tokens[nextPos])
+        {
+            case DISJOINTTOKEN: proc = "DisjointClass"; break;
+            case EQUIVALENTTOKEN: proc = "EquivalentTo"; break;
+            case SUBCLASSTOKEN: proc = "SubClassOf"; break;
+        }
         Error(404); // Caso encontro qualquer outra coisa
+    }
 }
 
 void Semantic::Coercao()
@@ -350,21 +362,12 @@ void Semantic::Error(int type)
 {
     switch (type)
     {
-    case 0:
-        cout << "\033[1;31m"
-             << "Inicializador de Classe não encontrado"
-             << "\033[0m"
-             << "\n";
-    case 1:
-        cout << "\033[1;31m"
-             << "Erro de precedência: EquivalentTo aparecendo após SubClassOf"
-             << "\033[0m"
-             << "\n";
-    case 404:
-        cout << "\033[1;31m"
-             << "Erro de precedência"
-             << "\033[0m"
-             << "\n";
+        case 0:
+            cout << "\033[1;31m" << "Inicializador de Classe não encontrado" << "\033[0m" << "\n";
+        break;
+        case 404:
+            cout << "\033[1;31m" << "Erro de precedência: " << proc << " declarado após " << prec << "\033[0m" << "\n";
+        break;
     }
     DeleteSelf();
 }

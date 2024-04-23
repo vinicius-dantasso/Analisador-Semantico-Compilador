@@ -24,6 +24,7 @@ Semantic * semantic;
 int yylex(void);
 int yyparse(void);
 void yyerror(const char *);
+void ResetVariables();
 %}
 
 %token RESERVED_WORD IDCLASS CLASS EQUIVALENTTO SUBCLASSOF DISJOINTCLASSES IDINDIVIDUALS
@@ -41,31 +42,33 @@ classes: classPri classes
 
 
 // Classe Primitiva
-classPri: class subClassOf { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; /* Forçando erro */ }
-		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+classPri: class subClassOf { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
+		| class subClassOf disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
+		| class subClassOf individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
+		| class subClassOf individuals disjointClasses { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); /* Forçando erro */ }
+		| class subClassOf disjointClasses individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 	 	;
 
 // Classe Definida/Aninhada
-classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-			| class equivalentTo { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+classDefAnin: class equivalentTo individuals { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
+			| class equivalentTo { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 			;
 
 // Classe com Axioma Fechado
-classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf_Axi disjointClasses individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf_Axi disjointClasses { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
-		| class subClassOf_Axi individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+classAxi: class subClassOf_Axi { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
+		| class subClassOf_Axi disjointClasses individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
+		| class subClassOf_Axi disjointClasses { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
+		| class subClassOf_Axi individuals { semantic = new Semantic(token, image, 1, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 		;
 	
 // Classe Enumerada
-classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+classEnum: class equivalentToEnum { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
 		 ;
 
 // Classe Coberta
-classCober: class equivalentToCober { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); image.clear(); faixa.clear(); vec_proprie.clear(); key = ""; }
+classCober: class equivalentToCober { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); token.clear(); ResetVariables(); }
+		  | class equivalentToCober subClassOf { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); ResetVariables(); }
+		  | class subClassOf equivalentToCober { semantic = new Semantic(token, image, 0, faixa, valueString, className, tipo); ResetVariables(); }
 		  ;
 
 // Define uma Class: Pizza
@@ -151,7 +154,7 @@ descAnin2: reserverd_words RELOP propertie reserverd_words RELOP propertie reser
 		 ;
 
 // EquivalentTo especifico para determinar uma classe coberta
-equivalentToCober: EQUIVALENTTO cober_list
+equivalentToCober: EQUIVALENTTO cober_list { token.push_back(EQUIVALENTTOKEN); }
 				 ;
 
 // Diferentes formas que um equivalentTo para a Classe Coberta pode se organizar
@@ -160,7 +163,7 @@ cober_list: id_class reserverd_words cober_list
 		  ;
 
 // EquivalentTo especifico para determinar uma classe enumerada
-equivalentToEnum: EQUIVALENTTO RELOP enum_list
+equivalentToEnum: EQUIVALENTTO RELOP enum_list { token.push_back(EQUIVALENTTOKEN); }
 				;
 
 // Diferentes formas que um equivalentTo para a Classe Enumerada pode se organizar
@@ -244,7 +247,16 @@ void yyerror(const char * s)
 		/* mensagem de erro exibe o símbolo que causou erro e o número da linha */
     	cout << "\033[1;31m" << "Erro sintático: símbolo \"" << yytext << "\" (linha " << yylineno << ") Na classe " << className << "\033[0m" << "\n\n";
 		isClass = 2;
-		token.clear(); image.clear(); faixa.clear(); vec_proprie.clear();
+		ResetVariables();
 	}
 	yyparse();
+}
+
+void ResetVariables()
+{
+	token.clear();
+	image.clear(); 
+	faixa.clear(); 
+	vec_proprie.clear(); 
+	key = "";
 }

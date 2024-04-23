@@ -10,3 +10,68 @@ Class: Pizza
     Individuals:
         CustomPizza1,
         CustomPizza2
+
+Class: Evaluated
+
+    SubClassOf: 
+        FunctionalComplex
+
+    EquivalentTo: 
+        BrokerServiceProvider or Connector or CoreParticipant
+
+Class: Calzone
+
+    SubClassOf:
+        hasBase some CalzoneBase,
+        hasBase some xsd:string,
+        hasCaloricContent some xsd:integer
+
+    DisjointClasses:
+        CalzoneBase, CalzoneTopping
+
+    Individuals:
+        CustomCalzone1,
+        CustomCalzone2
+
+Class: MargheritaPizza
+
+    SubClassOf:
+        NamedPizza,
+        hasTopping some MozzarellaTopping,
+        hasTopping some TomatoTopping,
+        hasTopping only (MozzarellaTopping or TomatoTopping)
+
+    DisjointClasses:
+        AmericanaHotPizza, AmericanaPizza, SohoPizza
+
+    Individuals:
+        MargheritaPizza1,
+        MargheritaPizza2
+
+Class: PeperonniPizza
+
+    SubClassOf:
+        NamedPizza,
+        hasTopping some MozzarellaTopping,
+        hasTopping some TomatoTopping,
+        hasTopping some PeperonniTopping,
+        hasTopping only (MozzarellaTopping or TomatoTopping or PeperonniTopping or OliveTopping)
+
+    DisjointClasses:
+        AmericanaHotPizza, AmericanaPizza, SohoPizza
+        
+    Individuals:
+        PeperonniPizza1,
+        PeperonniPizza2
+
+Class: HighCaloriePizza
+
+    EquivalentTo:
+        Pizza
+        and (hasCaloricContent some xsd:integer[>= 400])
+
+Class: LowCaloriePizza
+
+    EquivalentTo:
+        Pizza
+        and (hasCaloricContent some xsd:integer[< 300])
