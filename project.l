@@ -15,7 +15,7 @@ brancos {delim}+
 letterMa [A-Z]+
 letterMi [a-z]+
 letter [A-Za-z]+
-digito [-+]?[0-9]+ 
+digito [-+]?([0-9]|([0-9].[0-9]))+ 
 underline [_]
 has (has)
 is (is)

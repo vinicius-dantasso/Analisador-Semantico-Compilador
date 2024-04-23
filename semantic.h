@@ -55,5 +55,6 @@ public:
     void DeleteSelf();
     void Coercao();
     void CoercaoPropriedades();
+    bool isFloat(const string& str);
     void DataType();
 };

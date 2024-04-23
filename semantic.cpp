@@ -238,20 +238,25 @@ void Semantic::IndividualSemantic()
 void Semantic::Coercao()
 {
     bool coercao = false;
+    bool decimal = false;
     int meuInteiro;
 
     try
     {
         if ((faixaVal.at(0) == ">") || (faixaVal.at(0) == "<") || (faixaVal.at(0) == "<=") || (faixaVal.at(0) == ">="))
         {
-            meuInteiro = stoi(faixaVal.at(1));
-            if (meuInteiro < 400)
+            if(!isFloat(faixaVal[1]))
             {
+                meuInteiro = stoi(faixaVal.at(1));
                 coercao = true;
                 cout << "\033[1;31m"
                      << "Inteiro \"" << meuInteiro << "\" não está dentro da faixa de valor"
                      << "\033[0m"
                      << "\n";
+            }
+            else
+            {
+                cout << "\033[1;31m" << "Error de coerção: número decimal definido para tipo inteiro" << "\033[0m" << "\n";
             }
         }
         }
@@ -287,6 +292,28 @@ void Semantic::CoercaoPropriedades()
             cerr << e.what() << '\n';
         }
     }
+}
+
+bool Semantic::isFloat(const string& str)
+{
+    if (!str.empty()) {
+        bool ponto_decimal_encontrado = false;
+        // Verifica se cada caractere da string é um dígito, o ponto decimal ou o sinal de menos
+        for (char c : str) {
+            if (!std::isdigit(c) && c != '.' && c != '-') {
+                return false;
+            }
+            if (c == '.') {
+                // Verifica se já foi encontrado um ponto decimal
+                if (ponto_decimal_encontrado) {
+                    return false; // Se já foi encontrado, não é um número de ponto flutuante válido
+                }
+                ponto_decimal_encontrado = true;
+            }
+        }
+        return true;
+    }
+    return false; // Se a string estiver vazia, não é um número de ponto flutuante
 }
 
 void Semantic::DataType()
@@ -365,8 +392,13 @@ void Semantic::Error(int type)
         case 0:
             cout << "\033[1;31m" << "Inicializador de Classe não encontrado" << "\033[0m" << "\n";
         break;
+
+        case 1:
+            cout << "\033[1;33m" << "Error de coerção: número decimal definido para tipo inteiro\n" << "\033[0m";
+        break;
+
         case 404:
-            cout << "\033[1;31m" << "Erro de precedência: " << proc << " declarado após " << prec << "\033[0m" << "\n";
+            cout << "\033[1;33m" << "Erro de precedência: " << proc << " declarado após " << prec << "\033[0m" << "\n";
         break;
     }
     DeleteSelf();
